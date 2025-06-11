@@ -1,0 +1,393 @@
+.nav-left-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-right-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Search Container */
+.nav-container .search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.nav-container .search-icon {
+    position: absolute;
+    left: 10px;
+    color: #6b7280;
+    z-index: 1;
+}
+
+.nav-container .search-input {
+    padding: 8px 12px 8px 35px;
+    border: 1px solid rgba(0, 0, 0, 0.046);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.031);
+    font-size: 14px;
+    width: 250px;
+    transition: all 0.3s ease;
+}
+
+.nav-container .search-input:focus {
+    outline: none;
+    border: 1px solid #517df4;
+    box-shadow: 0 0 0 3px #517cf431;
+}
+
+.nav-container .search-input::placeholder {
+    color: #9ca3af;
+}
+
+/* Invite Button */
+.nav-container .invite-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: #000e00;
+    color: white;
+    border: none;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-container .invite-btn:hover {
+    background: #000000;
+}
+
+/* Dark theme support */
+.dark .search-input {
+    background: #374151;
+    border-color: #4b5563;
+    color: white;
+}
+
+.dark .search-input:focus {
+    border-color: #3b82f6;
+}
+
+.dark .search-icon {
+    color: #9ca3af;
+}
+
+/* InviteMemberModal.css */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.modal-container {
+    background: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 4px;
+    color: #6b7280;
+    transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.modal-content {
+    padding: 24px;
+}
+
+/* Success and Error Messages */
+.success-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #d1fae5;
+    color: #065f46;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.error-message {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* Invite Sections */
+.invite-section {
+    margin-bottom: 32px;
+}
+
+.invite-section:last-child {
+    margin-bottom: 0;
+}
+
+.invite-section h3 {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-icon svg {
+    position: absolute;
+    left: 12px;
+    color: #6b7280;
+    z-index: 1;
+}
+
+.input-with-icon input {
+    padding-left: 40px;
+}
+
+/* Buttons */
+.primary-btn {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.primary-btn:hover:not(:disabled) {
+    background: #2563eb;
+    transform: translateY(-1px);
+}
+
+.primary-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.secondary-btn {
+    background: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.secondary-btn:hover:not(:disabled) {
+    background: #e5e7eb;
+    transform: translateY(-1px);
+}
+
+.secondary-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Link Container */
+.link-container {
+    margin-top: 16px;
+}
+
+.link-display {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.link-input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 12px;
+    background: #f9fafb;
+    color: #6b7280;
+}
+
+.copy-btn {
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.copy-btn:hover {
+    background: #e5e7eb;
+}
+
+.link-info {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* Dark Theme Support */
+.dark .modal-container {
+    background: #1f2937;
+}
+
+.dark .modal-header {
+    border-bottom-color: #374151;
+}
+
+.dark .modal-header h2 {
+    color: #f9fafb;
+}
+
+.dark .close-btn {
+    color: #9ca3af;
+}
+
+.dark .close-btn:hover {
+    background: #374151;
+    color: #d1d5db;
+}
+
+.dark .invite-section h3 {
+    color: #f9fafb;
+}
+
+.dark .form-group label {
+    color: #d1d5db;
+}
+
+.dark input[type="email"],
+.dark input[type="text"],
+.dark select {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+}
+
+.dark input[type="email"]:focus,
+.dark input[type="text"]:focus,
+.dark select:focus {
+    border-color: #3b82f6;
+}
+
+.dark .secondary-btn {
+    background: #374151;
+    color: #d1d5db;
+    border-color: #4b5563;
+}
+
+.dark .secondary-btn:hover:not(:disabled) {
+    background: #4b5563;
+}
+
+.dark .link-input {
+    background: #374151;
+    color: #9ca3af;
+    border-color: #4b5563;
+}
+
+.dark .copy-btn {
+    background: #374151;
+    border-color: #4b5563;
+}
+
+.dark .copy-btn:hover {
+    background: #4b5563;
+}
+
+.dark .link-info {
+    color: #9ca3af;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+    .modal-container {
+        width: 95%;
+        margin: 20px;
+    }
+
+    .modal-header,
+    .modal-content {
+        padding: 16px;
+    }
+
+    .modal-header h2 {
+        font-size: 16px;
+    }
+}

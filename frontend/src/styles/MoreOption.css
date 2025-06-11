@@ -1,124 +1,527 @@
+/* MoreOption.css */
 .more-option-container {
-    position: absolute;
-    bottom: 70px;
-    right: 25px;
-    display: inline-block;
-
-}
-
-/* Custom Three-Dot Menu */
-.menu-toggle {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    border-radius: 50%;
-    background: white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease-in-out;
     position: relative;
-    transition: transform 0.3s ease-in-out, scale 0.3s ease-in-out;
+    display: inline-block;
 }
 
-.menu-toggle.open{
-    scale: 0.8;
-    transform: rotate(90deg); /* Optional: Adds a smooth rotation effect */
-    transition: scale 0.3s ease-in-out, transform 0.3s ease-in-out;
+.quick-date-options .option {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    padding: 0 10px;
+    height: 25px;
 }
 
-.menu-toggle span {
+
+.quick-date-options .option:hover {
+    border: 1px solid #00000019;
+    border-radius: 5px;
+}
+
+.checkIcon {
+    display: none;
+    width: 13px;
+    height: 13px;
+    margin-top: 5px;
+}
+
+/* CSS */
+.more-option-btn {
+    background-color: transparent;
+    background-image: linear-gradient(#fff, #f5f5fa);
+    border: 0 solid #003dff;
+    border-radius: 9999px;
+    box-shadow: rgba(37, 44, 97, .15) 0 4px 11px 0, rgba(93, 100, 148, .2) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: #484c7a;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Hind, system-ui, BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-weight: 600;
+    margin: 8px;
+    margin-left: 0;
+    text-align: center;
+    text-decoration: inherit;
+    text-wrap: nowrap;
+    transition: all .2s ease-out;
+    transition-behavior: normal;
+    white-space-collapse: collapse;
+    line-height: 1.15;
+    height: 100%;
+    width: 40px;
+}
+
+@media (min-width: 576px) {
+    .more-option-btn {
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+}
+
+.more-option-btn:after,
+.more-option-btn:before,
+.div-flex-items-center-justify-center:after,
+.div-flex-items-center-justify-center:before,
+.span-flex-items-center-h-16-w-auto-mr-8-py-2-flex-grow-0-flex-shrink-0-fill-current:after,
+.span-flex-items-center-h-16-w-auto-mr-8-py-2-flex-grow-0-flex-shrink-0-fill-current:before,
+.svg-block-h-full:after,
+.svg-block-h-full:before {
+    border: 0 solid #003dff;
+    box-sizing: border-box;
+}
+
+.more-option-btn:hover {
+    box-shadow: rgba(37, 44, 97, .15) 0 8px 22px 0, rgba(93, 100, 148, .2) 0 4px 6px 0;
+}
+
+.more-option-btn:disabled {
+    cursor: not-allowed;
+    opacity: .5;
+}
+
+.more-option-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-menu {
+    position: absolute;
+    bottom: 65px;
+    right: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 0px;
+    max-height: 0;
+    z-index: 1000;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.157);
+    transition: transform 0.2s ease, background 0.5s ease-out;
+    transform: scaleY(0);
+    transform-origin: 90% 120%;
+    background-color: #fff;
+}
+
+.dropdown-menu.show {
+    width: 200px;
+    transform: scaleY(1);
+    max-height: 500px;
+}
+
+.dropdown-item {
+    border-bottom: 1px solid #0000000f;
+}
+
+.dropdown-item .header {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    position: relative;
+}
+
+
+
+.dropdown-item.open .header {
+    box-shadow: 0px 6px 8px #0000000b;
+}
+
+.dropdown-item.open .submenu-arrow {
+    transform: rotate(90deg);
+}
+
+.dropdown-item.open .item-content {
+    max-height: 500px;
+    transition: max-height 0.6s ease;
+
+}
+
+
+.dropdown-item .header svg {
+    margin-right: 12px;
+    color: #555;
+}
+
+.dropdown-item .header span {
+    flex-grow: 1;
+    font-size: 14px;
+    color: #333;
+}
+
+.dropdown-item .item-content {
+    background-color: #e8e9f5a2;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s ease;
+}
+
+.submenu-arrow {
+    font-size: 18px;
+    color: #888;
+    margin-left: 5px;
+}
+
+
+/*  */
+
+.dot-menu {
+    position: relative;
+    width: 4px;
+    height: 20px;
+    transform: scale(.7)
+}
+
+.dot {
+    position: absolute;
     width: 4px;
     height: 4px;
-    border-radius: 100px;
-    background: black;
-    margin: 2px 0;
-    transition: 0.3s;
+    background-color: #4b5563;
+    border-radius: 50%;
+    transition: all 0.3s ease;
 }
 
-/* Transform to Cross */
-.menu-toggle.open span:nth-child(1) {
-    width: 20px;
-    height: 3px;
-    transform: rotate(45deg) translate(4.5px, 5px);
+.dot-1 {
+    left: 0;
+    top: 0;
 }
-.menu-toggle.open span:nth-child(2) {
-    width: 20px;
-    height: 3px;
+
+.dot-2 {
+    left: 0;
+    top: 8px;
+}
+
+.dot-3 {
+    left: 0;
+    top: 16px;
+}
+
+.dot-menu.is-active .dot-1 {
+    transform: translate(-6px, 8px) rotate(138deg);
+    width: 10px;
+    height: 2px;
+    border-radius: 0;
+}
+
+.dot-menu.is-active .dot-2 {
     opacity: 0;
 }
-.menu-toggle.open span:nth-child(3) {
-    width: 20px;
-    height: 3px;
-    transform: rotate(-45deg) translate(5px, -5.5px);
+
+.dot-menu.is-active .dot-3 {
+    transform: translate(0px, -8px) rotate(45deg);
+    width: 10px;
+    height: 2px;
+    border-radius: 0;
 }
 
-.action-container {
+/* More option dropdown css */
+
+/* Date picker dropdown */
+.date-picker-dropdown {
     position: absolute;
-    bottom: 50px;  /* Moves options **above** the icon */
-    right: 0;
+    bottom: 61px;
+    right: -35px;
+    width: 240px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    overflow: hidden;
+}
+
+.date-picker-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid #0000001c;
+    font-weight: 500;
+    color: #333;
+}
+
+.quick-date-options {
     display: flex;
-    flex-direction: column-reverse;  /* Makes options stack **upwards** */
-    gap: 10px;
-}
-@keyframes openAnimation {
-    0% {
-        transform: scale(0.2) rotate(90deg);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1) rotate(0deg);
-        opacity: 1;
-    }
+    flex-direction: column;
+    padding: 0 8px;
+    border: 1px solid rgba(0, 0, 0, 0.029);
+    border-top: 1px solid white;
 }
 
-@keyframes closeAnimation {
-    0% {
-        transform: scale(1) rotate(180deg);
-    }
-    100% {
-        transform: scale(0.2) rotate(20deg);
-    }
+.quick-date-options button {
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 5px 12px;
+    margin: 2px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+    color: #333;
 }
 
-.action-container span {
+.quick-date-options button:hover {
+    background-color: #f5f5f5;
+}
+
+.custom-date {
+    padding: 12px 16px;
+    border-top: 1px solid #eee;
+}
+
+.custom-date input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+}
+
+/* Priority dropdown */
+.priority-dropdown {
+    position: absolute;
+    bottom: 57px;
+    right: -7px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    z-index: 100;
+}
+
+.priority-option {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px;
+    margin: 10px 10px;
+    padding: 0 10px;
     cursor: pointer;
-    transition: background 0.3s ease;
-    background: #f5f5f5;
-    border-radius: 50px; /* Fully rounded button */
-    width: 45px; /* Circle size */
-    height: 45px; /* Circle size */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    height: 25px;
+    transition: background 0.2s;
+    justify-content: space-between;
 }
 
-.make-completed-button.open{
-    position: relative;
-    animation: openAnimation 0.3s ease-in forwards;
-
-}
-.delete-button.open{
-    position: relative;
-    animation: openAnimation 0.2s ease-in forwards;
-
-} 
-.search-icon.open{
-    position: relative;
-    animation: openAnimation 0.1s ease-in forwards;
- }
-
-
-
-.action-container span:hover {
-    background: #e0e0e0;
+.priority-option:hover {
+    border-radius: 5px;
+    border: 1px solid #0000002d;
 }
 
-.icon {
-    font-size: 18px;
+.checkIcon {
+    display: none;
+    width: 15px;
+    height: 15px;
+
 }
+
+.checkIcon.active {
+    display: flex;
+}
+
+.priority-dot {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.priority-option>div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.priority-dot.high {
+    background-color: #ff5252;
+    /* Red */
+}
+
+.priority-dot.medium {
+    background-color: #ffc107;
+}
+
+.priority-dot.low {
+    background-color: #4caf50;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scaleY(0);
+        transform-origin: bottom;
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scaleY(1);
+        transform-origin: bottom;
+    }
+}
+
+
+@keyframes fadeDown {
+    from {
+        opacity: 1;
+        transform: translateY(0) scaleY(1);
+        transform-origin: bottom;
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(10px) scaleY(0);
+        transform-origin: bottom;
+    }
+}
+
+
+.task-input-container.dark .date-picker-dropdown,
+.task-input-container.dark .priority-dropdown {
+    background: #333;
+    border: 1px solid #444;
+}
+
+.task-input-container.dark .date-picker-header {
+    border-bottom: 1px solid #444;
+    color: #eee;
+}
+
+.task-input-container.dark .custom-date {
+    border-top: 1px solid #444;
+}
+
+.task-input-container.dark .custom-date input {
+    background: #444;
+    border: 1px solid #555;
+    color: #eee;
+}
+
+.task-input-container.dark .quick-date-options button,
+.task-input-container.dark .priority-option {
+    color: #eee;
+}
+
+.task-input-container.dark .quick-date-options button:hover,
+.task-input-container.dark .priority-option:hover {
+    background-color: #444;
+}
+
+.task-input-container.dark .task-option-item i {
+    color: #ededed !important;
+}
+
+.task-input-container.dark .task-option-item .active {
+    color: #5b80e4 !important;
+}
+
+.list-icon {
+    color: #5e5e5e;
+    font-size: 0.9rem !important;
+}
+
+.task-input-container .task-option-item .active {
+    color: #04174d !important;
+    padding: 4px 5px;
+    border-radius: 10px;
+}
+
+.list-dropdown {
+    position: absolute;
+    top: -120px;
+    right: -6px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    z-index: 10;
+    width: 180px;
+    padding: 8px 0;
+}
+
+.task-option-dropdown {
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: bottom;
+}
+
+.task-option-dropdown.show {
+    opacity: 1;
+    transform: scale(1);
+    transform-origin: bottom;
+}
+
+.list-dropdown-item {
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.list-dropdown-item:hover {
+    background-color: #f5f5f5;
+}
+
+.task-input-container.dark .list-dropdown {
+    background-color: #333;
+    border-color: #444;
+}
+
+.task-input-container.dark .list-dropdown-item {
+    color: #eee;
+}
+
+.task-input-container.dark .list-dropdown-item:hover {
+    background-color: #444;
+}
+
+.list-dropdown-title {
+    display: block;
+    color: #363c44;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #cacaca;
+    padding: 5px 10px;
+    padding-top: 10px;
+}
+
+.task-input-container.dark .list-dropdown-title {
+    background-color: #333;
+    color: #eee;
+}
+
+.list-input-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.029);
+    border-top: 1px solid white;
+}
+
+.task-input-container.dark .add-list-input {
+    background-color: #222;
+    color: #eee;
+    border: 1px solid #444;
+}
+
+
+.task-input-container.dark .add-task-input {
+    color: #eee;
+}
+
+.add-list-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    outline: none;
+    font-size: 0.85rem;
+    color: #202124;
+    transition: border 0.2s ease;
+    width: 80%;
+}
+
+.add-list-input:focus {
+    border-color: #4285f4;
+    box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.1);
+}
+
+.add-list-input::placeholder {
+    color: #9aa0a6;
+    font-weight: 300;
+}
+
+/* end */

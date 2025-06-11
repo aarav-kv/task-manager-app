@@ -1,50 +1,107 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import "../styles/SideBar.css";
 import TaskSearchBar from "./TaskSearchBar";
 import TaskCounter from "./TaskCounter";
-
-const SideBar = ({ count, propName, toggle }) => {
-    const [activeItem, setActiveItem] = useState("Home"); // Default active item
-
-    useEffect(() => {
-        propName(activeItem);
-    }, [activeItem]);
-
-    const handleActive = (item) => {
-        setActiveItem(item);
-    };
-
+import { SidebarContext } from "../context/SideBarContext";
+import "../styles/toggle.css"
+import { useNavigate } from "react-router-dom";
+import { CalendarDays, ListTodo, House, Hourglass, ChartLine, LogOut, Moon, Sun } from 'lucide-react'
+const SideBar = ({ count, toggle }) => {
+    const navigate = useNavigate();
+    const { isOpen, toggleUserTheme, userTheme, setActiveTab, activeTab } = useContext(SidebarContext)
     return (
         <>
-            {/* Sidebar */}
-            <ul className={`side-bar ${toggle ? "open" : ""}`}>
-                <li className="page-title">ToDo</li>
-                <li><TaskSearchBar position={"sidebar"} /></li>
+            <ul className={`side-bar ${isOpen ? "open" : ""} ${userTheme}`}>
+                <li className="page-title">Task Manager</li>
+                <li><TaskSearchBar /></li>
 
-                <li
-                    className={`option ${activeItem === "Home" ? "active" : ""}`}
-                    onClick={() => handleActive("Home")}
-                >
-                    <div><i className="fa-solid fa-house"></i><span>Home</span></div>
-                    <TaskCounter count={count.notImportantTaskCount + count.importantTaskCount} />
-                </li>
+                <section className={`options ${userTheme}`}>
+                    <li
+                        className={`option ${activeTab === "calendar" ? "active" : ""} `}
+                        onClick={() => navigate("/calendar")}
+                    >
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <CalendarDays size={18} className="sidemenu-icon" />
+                            <span>Calendar</span>
+                        </div>
+                        <TaskCounter count={0} />
+                    </li>
 
-                <li
-                    className={`option ${activeItem === "Important" ? "active" : ""}`}
-                    onClick={() => handleActive("Important")}
-                >
-                    <div><i className="fa-solid fa-star"></i><span>Important</span></div>
-                    <TaskCounter count={count.importantTaskCount} />
-                </li>
+                    <li
+                        className={`option ${activeTab === "list" ? "active" : ""} `}
+                        onClick={() => navigate("/list")}
+                    >
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <ListTodo size={18} className="sidemenu-icon" />
+                            <span>List</span>
+                        </div>
+                        <TaskCounter count={0} />
+                    </li>
 
-                <li
-                    className={`option ${activeItem === "Tasks" ? "active" : ""}`}
-                    onClick={() => handleActive("Tasks")}
-                >
-                    <div><i className="fa-solid fa-clipboard-check"></i><span>Tasks</span></div>
-                    <TaskCounter count={count.notImportantTaskCount} />
-                </li>
-            </ul>
+                    <li
+                        className={`option ${activeTab === "today" ? "active" : ""}`}
+                        onClick={() => navigate("/today")}
+                    >
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <House size={18} className="sidemenu-icon" />
+                            <span>Today</span>
+                        </div>
+                        <TaskCounter count={0} />
+                    </li>
+
+                    <li className="divider-line"></li>
+                    <li
+                        className={`option ${activeTab === "clockify" ? "active" : ""}`}
+                        onClick={() => navigate("/clockify")}
+                    >
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <Hourglass size={18} className="sidemenu-icon" />
+                            <span>Clockify</span>
+                        </div>
+                        <TaskCounter count={0} />
+                    </li>
+                    <li
+                        className={`option ${activeTab === "dashboard" ? "active" : ""}`}
+                        onClick={() => navigate("/dashboard")}
+                    >
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <ChartLine size={18} className="sidemenu-icon" />
+                            <span>Dashboard</span>
+                        </div>
+                        <div>
+                            <i className="fa-solid fa-chevron-right"></i>
+                        </div>
+                    </li>
+
+                </section>
+
+                <section className={`settings-options ${userTheme}`}>
+                    {/* Theme Toggle */}
+                    <div className="theme-toggle-container">
+                        <button
+                            className={`theme-button ${userTheme === "light" ? "active" : ""}`}
+                            onClick={() => toggleUserTheme()}
+                        >
+                            <Sun size={18} className="sidemenu-icon" /> Light
+                        </button>
+                        <button
+                            className={`theme-button ${userTheme === "dark" ? "active" : ""}`}
+                            onClick={() => toggleUserTheme()}
+                        >
+                            <Moon size={18} className="sidemenu-icon" /> Dark
+                        </button>
+                    </div>
+
+                    {/* User Info */}
+                    <div className="user-info-row">
+                        <img src="/assets/profile_icons/pengiun.png" className="user-avatar" alt="User" />
+                        <span className="user-name">Jenny Wilson</span>
+                        <LogOut size={18} className="logout-icon" />
+                    </div>
+                </section>
+
+
+            </ul >
         </>
     );
 };

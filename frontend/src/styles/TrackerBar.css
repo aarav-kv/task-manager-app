@@ -1,0 +1,100 @@
+.tracker-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #e3e6ea;
+    padding: 10px;
+    background: #f9fbfc;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-height: 60px;
+    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.07);
+}
+
+.tracker-input {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 14px;
+    outline: none;
+}
+
+.tracker-input:focus {
+    border: 2px solid #2aaaf5;
+}
+
+.tracker-options {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-left: 10px;
+}
+
+.project-btn {
+    display: flex;
+    align-items: center;
+    border: none;
+    background: none;
+    color: #2aaaf5;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.plus-icon {
+    font-size: 18px;
+    margin-right: 5px;
+    color: #2aaaf5;
+}
+
+.icon {
+    font-size: 16px;
+    color: #999;
+    cursor: pointer;
+}
+
+.calendar-icon {
+    margin-left: 10px;
+}
+
+.time-field {
+    width: 70px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.today-text {
+    margin-left: 5px;
+    color: #555;
+    font-size: 14px;
+}
+
+.timer {
+    font-family: monospace;
+    font-size: 16px;
+    color: #000;
+    border: 1px solid rgb(181, 181, 181);
+    padding: 7px 10px;
+    border-radius: 4px;
+    background-color: #eeeeee;
+}
+
+.start-btn {
+    background-color: #2aaaf5;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.end-icons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}

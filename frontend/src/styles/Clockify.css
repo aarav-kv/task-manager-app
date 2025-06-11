@@ -1,0 +1,79 @@
+.startTime,
+.endTime {
+    border: 1px solid rgb(185, 185, 185);
+    border-radius: 4px;
+    padding: 3px 7px;
+}
+
+.hiphenDivder {
+    margin: 0 5px;
+}
+
+.description {
+    outline: none;
+}
+
+.time-entry-card {
+    border: 1px solid rgb(221, 221, 221);
+    overflow: hidden;
+    font-size: small;
+    border-radius: 3px;
+    margin: 5px;
+}
+
+.time-entry-card .time-entry-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    box-shadow: 1px 1px 5px #00000011;
+}
+
+.time-entry-list .time-entry-row {
+    display: flex;
+    padding: 10px;
+    background-color: #0000000b;
+
+}
+
+.time-entry-list .entry-description {
+    background-color: transparent;
+}
+
+.transition-list {
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.transition-list.collapsed {
+    max-height: 0;
+}
+
+.transition-list.expanded {
+    max-height: 500px;
+}
+
+.entry-meta div {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.entry-meta .time-separator,
+.entry-meta i {
+    margin: 0 7px;
+}
+
+.entry-start-time,
+.entry-end-time {
+    border: 1px solid #00000030;
+    padding: 4px;
+    border-radius: 5px;
+}
+
+.entry-duration {
+    padding: 4px;
+    border-radius: 5px;
+    border: 1px solid #00000030;
+    background-color: #0000001b;
+    cursor: pointer;
+}

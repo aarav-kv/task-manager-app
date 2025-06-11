@@ -1,0 +1,436 @@
+.dashboard-container {
+    padding: 20px;
+    padding-top: 10px;
+    height: 90vh;
+    scrollbar-width: thin;
+    scrollbar-color: #888 transparent;
+    overflow: hidden;
+}
+
+
+.nav-title {
+    margin-left: 0px !important;
+}
+
+.greeting {
+    display: flex;
+    flex-direction: row;
+    /* background-image: linear-gradient(to right top, #faeba4a2, #e7ba7c55, #fad6d922, #fff9ff00, #ffffff00); */
+    padding: 10px 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    text-align: left !important;
+    align-items: flex-start !important;
+    justify-content: center;
+    color: #0a0a0a !important;
+    padding-left: 0px !important;
+    min-width: 263px !important;
+}
+
+.greet-icon-conainer {
+    width: 50px;
+    height: 50px;
+    margin: auto;
+}
+
+.greeting .message {
+    font-weight: 700;
+    font-size: 20px;
+    color: #2c2c2c;
+}
+
+.greeting-container .greeting-name span {
+    font-weight: 400;
+    font-size: 20px;
+    color: #2c2c2c;
+    letter-spacing: 1px;
+}
+
+.greeting .msg-time-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+}
+
+.greeting .datetime {
+    color: #5f5f5f;
+    font-size: 13px;
+}
+
+
+.main-content {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+
+
+/* Stats highlight */
+.stats-highlight {
+    margin-bottom: 24px;
+}
+
+.highlight-value {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+.highlight-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* Summary button */
+.summary-button {
+    background-color: #8b5cf6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    margin-bottom: 24px;
+}
+
+.summary-button:hover {
+    background-color: #7c3aed;
+}
+
+/* Chart containers */
+.chart-container {
+    width: 100%;
+    margin-bottom: 12px;
+    position: relative;
+    height: 335px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-header {
+    border-bottom: 1px solid rgb(226, 226, 226);
+    padding: 13px 25px;
+    font-weight: 700;
+}
+
+.chart-card {
+    flex: 0 0 500px;
+    border: 1px solid rgb(207, 207, 207);
+    border-radius: 12px;
+    /* box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.075); */
+    max-height: max-content;
+}
+
+@media (max-width: 1024px) {
+    .main-content {
+        flex-direction: column;
+    }
+
+    .chart-container {
+        max-width: 100%;
+    }
+}
+
+.dashboard-container .task-list-container {
+    flex: 1;
+    min-width: 300px;
+    background-color: #ffffff;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    height: 400px;
+    border: 1px solid rgb(207, 207, 207);
+    border-radius: 12px;
+    /* box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.075); */
+}
+
+
+.task-tabs {
+    display: flex;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 16px;
+    padding: 0px 20px;
+    padding-top: 10px;
+}
+
+.tab {
+    background: none;
+    border: none;
+    padding: 10px 0;
+    margin-right: 20px;
+    font-size: 14px;
+    color: #888;
+    cursor: pointer;
+    position: relative;
+}
+
+.tab.active {
+    color: #0a0a0a;
+    font-weight: 700;
+}
+
+.tab.active:after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #0a0a0a;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 80%;
+    padding: 0 20px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.task-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.task-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.task-list::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.task-list::-webkit-scrollbar-button {
+    display: none;
+}
+
+.taskcard-dashboard {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 4px;
+    margin: 10px;
+    width: initial;
+    position: relative;
+}
+
+.taskcard-dashboard.high {
+    background: #f9e9e9;
+    border: 1px solid rgb(225, 162, 154);
+    border-left: 5px solid rgb(209, 30, 7);
+    padding: 0 10px;
+}
+
+.taskcard-dashboard.medium {
+    background: #fbf3d5;
+    border-left: 5px solid #ffc107;
+    padding: 0 10px;
+}
+
+.taskcard-dashboard.low {
+    background: #e4ffe5;
+
+    border: 1px solid #7bc97e;
+    border-left: 5px solid #4caf50;
+    padding: 0 10px;
+}
+
+.taskcard-dashboard.list {
+    border: 1px solid rgb(207, 207, 207);
+    margin-bottom: 10px;
+
+}
+
+.taskcard-dashboard.list .header {
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.116);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    padding: 0 10px;
+}
+
+.listcontent {
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.listcontent.open {
+    max-height: 500px;
+}
+
+.date-wrapper .date-label {
+    font-size: 14px;
+    margin: 8px 0;
+}
+
+.date-wrapper {
+    border: 1px solid rgb(207, 207, 207);
+    padding: 0 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.fa-list-ul,
+.fa-angle-down {
+    font-size: 0.7rem;
+    color: #6e6e6e;
+    transition: all 1s ease;
+}
+
+
+.fa-angle-down.open {
+    transform: rotateX(180deg);
+}
+
+.task-checkbox-dashboard {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.status-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.status-card {
+    flex: 1;
+    min-width: 240px;
+    height: 85px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    color: white;
+    position: relative;
+    /* box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.08); */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.status-card.tasks {
+    min-width: 100px;
+    max-width: 200px;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(107, 148, 252, 0.15);
+    background: white;
+
+    border: 1px solid #6b94fc;
+    border-left: 4px solid #6b94fc;
+}
+
+.status-card.completed {
+    min-width: 100px;
+    max-width: 200px;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(41, 203, 130, 0.15);
+    background: white;
+    border: 1px solid #29cb82;
+    border-left: 4px solid #29cb82;
+}
+
+.status-card.overdue {
+    min-width: 100px;
+    max-width: 200px;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(247, 140, 101, 0.15);
+    background: white;
+    border: 1px solid #f78c65;
+
+    border-left: 4px solid #f78c65;
+}
+
+.status-card.upcoming {
+    min-width: 100px;
+    max-width: 200px;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(248, 178, 106, 0.15);
+    background: white;
+    border: 1px solid #ffd272;
+    border-left: 4px solid #ffd272;
+}
+
+.icon-container {
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    position: absolute;
+}
+
+.icon-container .icon {
+    width: 35px;
+    height: 35px;
+    background-color: rgba(255, 255, 255, 0.906);
+    color: rgb(138, 138, 138);
+    padding: 7px;
+    border-radius: 100%;
+}
+
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    margin-left: 65px;
+}
+
+.count {
+    font-size: 25px;
+    font-weight: 700;
+    margin: 0;
+    color: #000000a4;
+}
+
+.label {
+    font-size: 14px;
+    margin: 0;
+    opacity: 0.9;
+    color: #000000a4;
+}
+
+.icon-container {
+    animation: pulse 1.5s;
+}
+
+@keyframes pulse {
+    0% {
+        width: 50px;
+        height: 50px;
+    }
+
+    50% {
+
+        width: 55px;
+        height: 55px;
+    }
+
+    100% {
+
+        width: 50px;
+        height: 50px;
+    }
+}

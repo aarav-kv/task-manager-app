@@ -1,63 +1,215 @@
+.nav-container {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  top: 0;
+  width: 100%;
+  gap: 10px;
+  right: 0;
+  padding: 10px 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+  align-items: center;
+  border-bottom: 1px solid #0000001d;
+  z-index: 10;
+  background-color: rgb(255, 255, 255);
+  flex-shrink: 0;
+  height: 60px;
+  transition: background-color 0.3s ease;
+  justify-content: space-between;
+}
+
+
+
+.nav-left-section,
+.nav-center-section,
+.nav-right-section {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.nav-left-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.nav-center-section {
+  flex: 2;
+  justify-content: center;
+}
+
+.nav-right-section {
+  flex: 1;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.nav-title-wrapper {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+.nav-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 20px;
+  color: gray;
+}
+
+.back-btn {
+  color: #363636;
+  width: 20px;
+  height: 20px;
+  margin-left: 20px;
+  margin-right: 3px;
+  cursor: pointer;
+}
+
+.navTitleIcon {
+  color: #313131;
+}
+
+
+.nav-login {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+}
+
+.signin-btn button {
+  background: black;
+  color: white;
+  font-size: 13px;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 36px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.signin-btn button:hover {
+  background: #333;
+}
+
+.title-icon {
+  display: flex;
+  align-items: center;
+}
+
+.greet-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.greet-message {
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.greet-subtext {
+  color: gray;
+  font-size: 1rem;
+  margin-top: -8px;
+  margin-bottom: 20px;
+}
+
+.greetIcon {
+  width: 40px;
+  height: 40px;
+}
+
+.nav-title {
+  display: block;
+  /* or use flex: 1 with flex containers */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: gray;
+  font-size: 20px;
+}
+
+@media (max-width: 768px) {
+  .nav-title {
+    color: #303030;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+
   .nav-container {
     display: flex;
     flex-direction: row;
-    gap: 20px;
-    position: absolute;
+    position: fixed;
     top: 0;
-    padding: 10px 20px;
-    align-items: center;
-    width: calc(100% - 100px);
+    left: 0;
+    right: 0;
+    z-index: 1;
+    width: calc(100%);
   }
-
-  .greet-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .greet-message {
-    font-weight: 500;
-    font-size: 1.5rem;
-  }
-  
-  .greet-subtext {
-    color: gray;
-    font-size: 1rem;
-    margin-top: -8px;
-    margin-bottom: 20px;
-  }
-  
-  .greetIcon{
-    width: 40px;
-    height: 40px;
 }
-  
-  @media (max-width: 768px) {
-    .searchIcon{
-      position: relative;
-      top: -20px;
-      right: -5px;
-    }
 
-    .greet-message {
-      font-size: 1.0rem;
-    }
-  
-    .nav-container {
-       width: calc(100%);
-       /* backdrop-filter: blur(10px);  */
-       background: rgba(255, 255, 255, 0.3); 
-       padding-top: 10px;
-       
-      }
-
-    .greet-subtext {
-      font-size: 0.9rem;
-    }
-
-    .greetIcon{
-        width: 30px;
-        height: 30px;
-    }
+@supports (-webkit-touch-callout: none) {
+  body {
+    height: -webkit-fill-available;
   }
-  
+}
+
+.nav-container.dark {
+  background-color: rgb(32, 32, 32);
+  border-color: #363636;
+}
+
+.nav-container.dark .nav-title {
+  color: #e2e2e2;
+}
+
+
+.nav-container.home {
+  box-shadow: none;
+}
+
+.bell-wrapper {
+  position: relative;
+  display: inline-block;
+  border-radius: 100px;
+  padding: 10px;
+}
+
+.bell-wrapper:hover {
+  background-color: #00000015;
+}
+
+.bell-notification-dot {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 12px;
+  height: 12px;
+  background-color: red;
+  /* or green */
+  border-radius: 50%;
+  border: 3px solid white;
+  animation: blink 1.2s infinite;
+}
+
+.bell-icon {
+  transform: scale(0.7);
+  color: #303030;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    background-color: red;
+  }
+
+  50% {
+    background-color: rgb(251, 202, 202);
+  }
+}

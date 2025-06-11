@@ -1,0 +1,239 @@
+.task-input-container,
+.search-input-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #05023b3d;
+  border-radius: 8px;
+  background: #efefefb6;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: absolute;
+  font-size: .9rem;
+  transition: all 0.3s ease;
+  z-index: 9;
+  flex-shrink: 0;
+  bottom: 10px;
+  left: 60px;
+  right: 60px;
+  transform: translateY(100px);
+}
+
+.add-button,
+.search-button {
+  border: none;
+  background: #b7b7b7;
+  color: rgb(33, 33, 33);
+  font-size: 20px;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  border-radius: 0px 0px 0px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.task-input-container.active-task-input {
+  transform: translateY(0px);
+  transition: transform 0.3s ease;
+}
+
+.add-button:hover {
+  background: #0056b3;
+}
+
+.search-input {
+  font-size: 15px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  outline: none;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.add-task-input {
+  flex: 1;
+  background-color: #c8ccd400;
+  border: none;
+  outline: none;
+  padding: 0 15px;
+  color: #222222;
+  height: 50px;
+  min-width: 100px;
+}
+
+
+/* Animation for fade in and slide up */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Hide default checkbox */
+@media (max-width:786px) {
+  .task-input-container {
+    position: fixed;
+    bottom: 15px;
+    left: 10px;
+    right: 10px;
+    border: 1px solid #c6c6c6;
+    border-radius: 20px !important;
+
+  }
+
+  .add-button {
+    border-radius: 0 20px 20px 0;
+    border-top: 1px solid rgb(144, 144, 144);
+    border-right: 1px solid rgb(144, 144, 144);
+    border-bottom: 1px solid rgb(144, 144, 144);
+    border-left: 1px solid rgb(144, 144, 144);
+  }
+
+
+  .task-input-container.dark {
+    border-radius: 10px;
+  }
+}
+
+/* Explosion effect using box-shadow */
+@keyframes firework-43 {
+  0% {
+    opacity: 1;
+    box-shadow:
+      0 0 0 -2px #4285f4,
+      0 0 0 -2px #4285f4,
+      0 0 0 -2px #4285f4,
+      0 0 0 -2px #4285f4,
+      0 0 0 -2px #4285f4,
+      0 0 0 -2px #4285f4;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    box-shadow:
+      0 -25px 0 0px #4285f4,
+      /* Up */
+      20px -15px 0 0px #4285f4,
+      /* Up-Right */
+      20px 15px 0 0px #4285f4,
+      /* Down-Right */
+      0 25px 0 0px #4285f4,
+      /* Down */
+      -20px 15px 0 0px #4285f4,
+      /* Down-Left */
+      -20px -15px 0 0px #4285f4;
+    /* Up-Left */
+  }
+}
+
+.task-input-container.dark {
+  border: 1px solid #1c1c1c;
+  background: #5a5a5af8;
+  box-shadow: 0px 5px 40px #0000005a;
+}
+
+.task-input-container.dark input {
+  color: #171414;
+}
+
+.task-input-container.dark input::placeholder {
+  color: #a8a8a8;
+  opacity: 1;
+}
+
+
+/* Add these styles to your AddTask.css file */
+
+.task-options {
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+}
+
+.task-option-item {
+  background-color: #dfdfdf00;
+  position: relative;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+}
+
+.fa-stopwatch,
+.fa-flag {
+  font-size: 16px;
+  color: #777;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.fa-stopwatch:hover,
+.fa-flag:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+
+/* ADd task */
+/* CSS */
+.add-btn {
+  background-color: transparent;
+  background-image: linear-gradient(#5172ff, #003dff);
+  border: 0 solid #003dff;
+  border-radius: 9999px;
+  box-shadow: rgba(81, 94, 189, 0.497) 0 4px 11px 0, rgba(158, 170, 248, 0.532) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Hind, system-ui, BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-weight: 600;
+  margin: 6px;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: inherit;
+  text-wrap: nowrap;
+  transition: all .2s ease-out;
+  transition-behavior: normal;
+  white-space-collapse: collapse;
+  line-height: 1.15;
+}
+
+@media (min-width: 576px) {
+  .add-btn {
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+}
+
+.add-btn:after,
+.add-btn:before,
+.div-flex-items-center-justify-center:after,
+.div-flex-items-center-justify-center:before,
+.span-flex-items-center-h-16-w-auto-mr-8-py-2-flex-grow-0-flex-shrink-0-fill-current:after,
+.span-flex-items-center-h-16-w-auto-mr-8-py-2-flex-grow-0-flex-shrink-0-fill-current:before,
+.svg-block-h-full:after,
+.svg-block-h-full:before {
+  border: 0 solid #003dff;
+  box-sizing: border-box;
+}
+
+.add-btn:hover {
+  box-shadow: rgba(37, 44, 97, .15) 0 8px 22px 0, rgba(93, 100, 148, .2) 0 4px 6px 0;
+}
+
+.add-btn:disabled {
+  cursor: not-allowed;
+  opacity: .5;
+}

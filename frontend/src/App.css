@@ -1,29 +1,30 @@
-*{
-  
-   box-sizing: border-box;
-   -webkit-tap-highlight-color: transparent; /* Removes tap highlight on mobile */
+* {
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 400;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
-html,body{
-  height: 100%;
-  overflow: hidden; /* Prevent unwanted scrolling */
+#root {
+  display: flex;
 }
-body{
-  color: #000000;
+
+html,
+body {
+  height: 100dvh;
   margin: 0;
   padding: 0;
-  background-image: linear-gradient(to right bottom, #e2d6ff, #d8d4e4, #ece6ff, #f1edff, #ececec, #efefef, #faf6ff, #fbf7ff, #e8e5e9, #faeaff, #fbe2ff, #fddbff); 
+  overflow-x: hidden;
 }
 
-
-.app-layout{
-  display: flex;
-  flex-direction: row;
+body.dark {
+  background-color: #242424;
 }
 
-/* Responsive layout for mobile */
-@media (max-width: 768px) {
-  .app-layout {
-    flex-direction: column; /* Stack items vertically on small screens */
-  }
+.container {
+  overflow-y: auto;
 }

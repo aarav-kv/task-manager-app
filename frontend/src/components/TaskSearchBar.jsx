@@ -1,31 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import "../styles/TaskSearchBar.css";
 import isMobileView from "../hooks/isMobileView";
+import { SidebarContext } from "../context/SideBarContext";
 
 const TaskSearchBar = ({ position }) => {
     const isViewMobile = isMobileView();
+    const { isOpen, toggleUserTheme, userTheme, setActiveTab, activeTab } = useContext(SidebarContext)
+
     const [style, setStyle] = useState({
         left: "5px",
-        top: "25px"
+        top: "23px"
     })
     const [showInput, setShowInput] = useState(false);
 
     let content;
     if (!isViewMobile && position === "sidebar") {
         content = (
-            <div className="task-search-bar">
+            <div className={`task-search-bar ${userTheme} `}>
                 <div className="search-container">
                     <i className="fa-solid fa-magnifying-glass search-icon" style={style}></i>
-                    <input type="text" placeholder="Search"
-                        onFocus={() => { setStyle({ left: "2px", top: "25px" }) }}
-                        onBlur={() => { setStyle({ left: "5px", top: "25px" }) }}
-                    />
+                    <input type="text" placeholder="Search" />
                 </div>
             </div>
         );
     } else if (isViewMobile && position === "navbar") {
         content = (
-            <div className={`navbar-search ${showInput ? "active" : ""}`} onClick={() => setShowInput(!showInput)}>
+            <div className={`navbar-search ${showInput ? "active" : ""} ${userTheme}`} onClick={() => setShowInput(!showInput)}>
 
                 <input
                     type="text"

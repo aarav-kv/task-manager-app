@@ -1,0 +1,230 @@
+.home-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 5%;
+    min-height: 400px;
+    flex-wrap: wrap;
+    /* Ensures proper wrapping on smaller screens */
+}
+
+.background-img {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-image: url("/assets/line.png");
+    background-size: 1380px 400px;
+    /* Fixed width and height */
+    background-repeat: no-repeat;
+    /* Prevent tiling */
+    background-position: 0px 340px;
+    /* Center the image */
+    z-index: -1000;
+}
+
+
+/* Text Content */
+.home-content {
+    max-width: 500px;
+    flex: 1;
+    margin-top: -55px;
+}
+
+.badge {
+    display: inline-block;
+    background: #f3e5ff;
+    color: #b565f9;
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.title {
+    font-size: 3vw;
+    /* Makes text size adapt to screen width */
+    font-weight: bold;
+    color: #222;
+    line-height: 1.3;
+}
+
+.subtitle {
+    font-size: 1.1vw;
+    color: #777;
+    margin: 15px 0;
+}
+
+/* CTA Button */
+.cta-button {
+    background: #5b6efc;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 1rem;
+    border: none;
+    margin-top: 20px;
+    cursor: pointer;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2),
+        inset 2px 2px 5px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+
+.cta-button:hover {
+    box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.3),
+        inset 3px 3px 6px rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.cta-button:active {
+    transform: scale(0.95);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2),
+        inset -2px -2px 5px rgba(255, 255, 255, 0.2);
+}
+
+.home-image {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    max-width: 700px;
+    width: 100%;
+}
+
+/* Make Image Responsive */
+.home-image>img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    transform: scale(1.1, 1.2);
+    margin-right: 100px;
+    transition: all 0.1s ease-in;
+}
+
+.word-highlight {
+    background: linear-gradient(to right, rgba(255, 255, 0, 0) 0%, rgba(255, 245, 99, 0.757) 100%, rgba(255, 255, 0, 0) 100%);
+    padding-right: 10px;
+}
+
+.signin-link {
+    display: none;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .home-container {
+        flex-direction: column-reverse;
+        text-align: center;
+        align-items: center;
+    }
+
+
+
+    .home-content {
+        margin-top: 40px;
+    }
+
+    .home-image {
+        max-width: 400px;
+    }
+
+    .title {
+        font-size: 36px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 28px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+
+    .cta-button {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-container {
+        flex-direction: column-reverse;
+    }
+
+    .home-image>img {
+        margin-right: 0px;
+    }
+
+    .home-content {
+        max-width: 100%;
+    }
+
+    .home-image {
+        margin-top: 40px;
+        max-width: 100%;
+    }
+
+    .home-image>img {
+        width: 80%;
+        height: auto;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+
+    .subtitle {
+        font-size: 13px;
+    }
+
+    .signin-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .signin-link button {
+        background-color: rgba(255, 0, 0, 0);
+    }
+
+}
+
+.home-container.ismobile {
+    display: flex;
+    flex-direction: column-reverse;
+    height: 100vh;
+    padding-bottom: 30px;
+}
+
+.home-container.ismobile .home-content {
+    margin-top: 0px;
+}
+
+
+.home-container.ismobile .home-content .title {
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.home-container.ismobile .home-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.home-container.ismobile .home-content .signin-btn {
+    margin-top: 10px;
+}
+
+
+.home-container.ismobile .home-content .signin-btn button {
+    width: 135px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}

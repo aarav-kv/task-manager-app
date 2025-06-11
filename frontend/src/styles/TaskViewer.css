@@ -1,83 +1,733 @@
-/* Only apply to div with class minimal-scroll */
-.minimal-scroll::-webkit-scrollbar {
-    width: 6px;
-}
-
-.minimal-scroll::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.minimal-scroll::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-}
-
-.minimal-scroll::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.minimal-scroll {
-    height: 100vh;
-    height: calc(100dvh - 80px); /* Modern browser support */
-    width: 100%;
+.task-scroll-view {
+    height: calc(100vh - 65px);
     overflow-y: auto;
-    box-sizing: border-box;
-    margin-top: 80px !important;
-    padding-bottom: 70px !important;
+    background-color: #ffffffe6;
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 150px;
+    position: relative;
+    top: 0px;
+    flex-direction: column;
+    scrollbar-gutter: stable;
+    min-width: 260px;
+    transition: background-color 0.5s ease border-color 0.8s ease;
+}
+
+.empty-list-animation {
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
+    border: 2px solid #dbdbdb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+}
+
+.empty-list-animation div {
+    font-size: .85rem;
+    color: #8c8c8c;
+}
+
+.total-time-wraper {
+    display: flex;
+    align-items: center;
+    padding: 0 63px;
+
+}
+
+.total-time-inner-wrap {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.148);
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.total-time-title {
+    color: #606060;
+    font-size: 13px;
+}
+
+.main-view-container {
+    width: 100%;
+    overflow-y: hidden;
+    z-index: 10;
+    position: relative;
+    border-left: 1px solid #0000002a;
+    border-right: 1px solid #0000002a;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.067);
+}
+
+.taskcard,
+.list-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: hsl(0, 0%, 100%);
+    height: 50px;
+    padding: 0 35px;
+    user-select: none;
+    transition: box-shadow 1s ease, border 1s ease;
+}
+
+.taskcard {
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.155);
+    border: 1px solid rgba(0, 0, 0, 0.088);
+}
+
+.list-card {
+    opacity: 0;
+    transform: translateY(0px);
+    animation: fadeInUp 0.3s ease-out forwards;
+    margin: 2px 65px;
+    border: 1px solid #d9d9d9;
+    border-radius: 5px;
+}
+
+.taskcard-wrapper {
+    margin: 2px 65px;
+    border: 1px solid #d9d9d9;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #fbfbfb;
+    min-height: max-content;
+}
+
+.list-card.add-list {
+    justify-content: center;
+    font-weight: 500;
+    font-size: 16px;
+    color: #4A90E2;
+    background: #f5faff;
+    border: 2px dashed #4A90E2;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.list-card.add-list:hover {
+    background: #e6f2ff;
+    border-color: #007aff;
+    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.1);
+}
+
+.list-card.hide {
+    display: none;
+}
+
+.taskcard .calendarIcon {
+    width: 13px;
+    height: 13px;
+}
+
+.calendarIconWrap,
+.priorityIconWrap {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    gap: 6px;
+    height: 20px;
+    border-radius: 100px;
+    padding: 11px 8px;
+    font-size: 11.4px;
+    color: #494949;
+    border: 1px solid #24242450;
+}
+
+.subTaskCountIcon {
+    width: 13px;
+    height: 13px;
+    font-size: 10px;
+    border-radius: 100%;
+    background-color: #7d7d7d20;
+    text-align: center;
+    display: flex;
+    color: #4c4c4c;
+    align-items: center;
+    justify-content: center;
+}
+
+.priorityIcon {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: rgb(119, 119, 119);
+}
+
+.priorityIconWrap.high {
+    border: 1px solid #8b0202e9;
+}
+
+.priorityIconWrap.medium {
+    border: 1px solid #616401;
+}
+
+.priorityIconWrap.low {
+    border: 1px solid #777777;
+}
+
+.priorityIcon.high {
+    background-color: #f34444;
+}
+
+.priorityIcon.medium {
+    background-color: #dcce10;
 }
 
 
-.task-viewer-container {
-    padding: 0 5%;
-    flex: 1;
+.priorityIcon.low {
+    background-color: #777777;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .task-viewer-container {
-        padding: 0 0px !important;
-        
-    }
-
-    .minimal-scroll {
-        height: 100vh;
-        height: calc(100dvh); /* Modern browser support */
-        padding-top: 80px !important;
-        padding-bottom: 70px !important;
-        margin-top: 0px !important;
-    }
+.list-card {
+    min-height: 50px;
+    padding-left: 10px;
 }
 
+.list-card .icon {
+    width: 20px;
+    color: #242424;
+    height: 20px;
+}
+
+.list-card .wrapper {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 10px;
+}
+
+.taskcard:hover,
+.list-card:hover {
+    transition: box-shadow 0.2s ease, border 0.2s ease;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+}
 
 .task-completed {
     position: relative;
     color: rgb(178, 178, 178);
     transition: color 0.3s ease-in-out;
+    text-decoration: line-through;
 }
 
-.task-completed::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 100%;
-    height: 1.5px;
-    background: rgb(176, 176, 176);
-    transform-origin: left;
-    -webkit-animation: strike-43 0.2s ease-out forwards;
-    animation: strike-43 0.2s ease-out forwards;
+.task-scroll-view::-webkit-scrollbar-thumb {
+    background-color: #0000004d;
+    border-radius: 10px;
+    padding-top: 10px;
 }
 
-/* Explosion effect using box-shadow */
+.task-scroll-view::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.task-scroll-view::-webkit-scrollbar-button {
+    display: none;
+}
+
+.task-scroll-view::-webkit-scrollbar {
+    width: 6px;
+    padding-top: 10px;
+}
+
+.task-scroll-view::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+@media (max-width: 768px) {
+    .task-scroll-view {
+        height: calc(100dvh - 55px);
+        margin-top: 50px;
+        width: 100vw;
+        padding-top: 10px;
+    }
+}
+
+
 @keyframes strike-43 {
     0% {
         opacity: 0;
         transform: scaleX(0);
 
     }
+
     100% {
         opacity: 1;
         transform: scaleX(1);
     }
-  }
-  
+}
+
+.task-scroll-view.dark {
+    background-color: #242424;
+}
+
+
+.task-scroll-view.dark .taskcard {
+    background-color: #242424;
+    color: #d9d9d9;
+    border-bottom: 1px solid #4c4c4c;
+
+}
+
+.task-scroll-view.dark label {
+    color: #d9d9d9;
+}
+
+.fa-chevron-right {
+    color: #646464;
+    margin-left: 20px;
+}
+
+.fa-chevron-right.completed {
+    color: #b6b6b6;
+}
+
+/* loaidng */
+.loading-container {
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #2e2e2e;
+}
+
+.task-scroll-view.empty {
+    padding-bottom: 50px !important;
+}
+
+.task-scroll-view.dark .loading-container {
+    color: #7d7d7d;
+}
+
+.task-scroll-view.dark .empty-list-animation {
+    border-color: #494949;
+}
+
+.task-scroll-view.dark .empty-list-animation div {
+    color: #636363;
+}
+
+.loader {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: block;
+    margin: 15px auto;
+    position: relative;
+    box-sizing: border-box;
+    animation: animloader 1s linear infinite alternate;
+}
+
+@keyframes animloader {
+    0% {
+        box-shadow: -38px -6px, -14px 6px, 14px -6px;
+    }
+
+    33% {
+        box-shadow: -38px 6px, -14px -6px, 14px 6px;
+    }
+
+    66% {
+        box-shadow: -38px -6px, -14px 6px, 14px -6px;
+    }
+
+    100% {
+        box-shadow: -38px 6px, -14px -6px, 14px 6px;
+    }
+}
+
+
+/* Checkbox */
+.checkbox-wrapper-combined {
+    position: relative;
+}
+
+.checkbox-wrapper-combined>svg {
+    position: absolute;
+    top: -130%;
+    left: -170%;
+    width: 110px;
+    pointer-events: none;
+}
+
+.checkbox-wrapper-combined * {
+    box-sizing: border-box;
+}
+
+.checkbox-wrapper-combined .inp-cbx {
+    position: absolute;
+    visibility: hidden;
+}
+
+.checkbox-wrapper-combined .cbx {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.checkbox-wrapper-combined .cbx .checkbox-container {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    -webkit-filter: url("#goo-combined");
+    filter: url("#goo-combined");
+}
+
+.checkbox-wrapper-combined .cbx .checkbox-container.priority-high {
+    border: 2px solid #c70000;
+}
+
+.checkbox-wrapper-combined .cbx .checkbox-container.priority-medium {
+    border: 2px solid gray;
+}
+
+.checkbox-wrapper-combined .cbx .checkbox-container.priority-low {
+    border: 2px solid rgb(128, 128, 128);
+}
+
+.checkbox-wrapper-combined .cbx .checkbox-container svg {
+    position: absolute;
+    top: 3px;
+    left: 2px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.checkbox-wrapper-combined .cbx .checkbox-container svg path {
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 20;
+    stroke-dashoffset: 20;
+    transition: stroke-dashoffset 0.3s ease;
+    transition-delay: 0.2s;
+}
+
+.visually-hidden {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.checkbox-wrapper-combined .cbx .checkbox-text {
+    margin-left: 8px;
+    position: relative;
+}
+
+.checkbox-wrapper-combined .cbx .checkbox-text:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background: #B9B8C3;
+    transform-origin: 0 0;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.checkbox-wrapper-combined .cbx:hover .checkbox-container {
+    border-color: #866efb;
+}
+
+.checkbox-wrapper-combined .inp-cbx:checked+.cbx .checkbox-container {
+    animation: splash-combined 0.6s ease forwards;
+    border-color: transparent;
+}
+
+.checkbox-wrapper-combined .inp-cbx:checked+.cbx .checkbox-container svg path {
+    stroke-dashoffset: 0;
+}
+
+.checkbox-wrapper-combined .inp-cbx:checked+.cbx .checkbox-text {
+    color: #B9B8C3;
+    transition: color 0.3s ease;
+}
+
+.checkbox-wrapper-combined .inp-cbx:checked+.cbx .checkbox-text:after {
+    transform: scaleX(1);
+    transition: transform 0.3s ease;
+}
+
+@keyframes splash-combined {
+    40% {
+        background: #866efb;
+        box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
+    }
+
+    100% {
+        background: #866efb;
+        box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+    }
+}
+
+.ellipsis-icon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-radius: 50%;
+    margin: 0;
+    transition: all 0.2s ease;
+    gap: 2px;
+    transform: scale(0);
+}
+
+.list-card:hover .ellipsis-icon-container {
+    transform: scale(.8);
+    padding: 4px 13px;
+    margin: 0 3px;
+}
+
+.list-card .options {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.ellipsis-icon-container:hover {
+    background-color: #00000013;
+}
+
+.ellipsis-icon-container:hover .ellipsis-dot {
+    background-color: #00000013;
+}
+
+.ellipsis-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: 1.5px solid #606060;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+
+/* Chevron expand animation */
+.fa-chevron-right1 {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.fa-chevron-right1:hover {
+    color: #333;
+}
+
+.fa-chevron-right1.expanded {
+    transform: rotate(90deg);
+}
+
+.task-card-section-right {
+    display: flex;
+    gap: 5px;
+}
+
+.time-handler.expanded {
+    max-height: 100px;
+    opacity: 1;
+    padding: 5px 20px;
+}
+
+/* For expand */
+.time-handler {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e5e7eb;
+}
+
+.time-handler .pill-element {
+    padding: 3px 12px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid;
+    white-space: nowrap;
+}
+
+.time-handler .date-element {
+    background-color: rgba(239, 246, 255, 0.8);
+    border: 2px solid #615ffd;
+    color: #4c72af;
+    margin-right: 25px;
+    font-size: 12px;
+}
+
+.time-handler .input-wrapper {
+    flex: 1;
+}
+
+.time-handler .input-element {
+    width: 95%;
+    min-width: 200px;
+    padding: 3px 12px;
+    background-color: rgba(239, 246, 255, 0.8);
+    border: 2px solid #615ffd;
+    border-radius: 50px;
+    color: #4c72af;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.time-handler .input-element::placeholder {
+    color: rgb(156, 163, 175);
+}
+
+.time-handler .input-element:focus {
+    border-color: rgb(107, 114, 128);
+    box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.3);
+}
+
+.time-handler .time-element {
+    background-color: rgba(239, 246, 255, 0.8);
+    border: 2px solid #615ffd;
+    display: flex;
+    gap: 8px;
+    margin: 0 10px;
+    width: 95px;
+    text-align: center;
+}
+
+.time-value {
+    text-align: center;
+    width: 100%;
+}
+
+.time-handler .time-label,
+.time-handler .time-value {
+    font-size: 11px;
+    color: #4c72af;
+}
+
+.time-handler .separator {
+    color: rgb(156, 163, 175);
+    font-weight: bold;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.time-handler .play-button {
+    padding: 5px 6px;
+    margin: 0 10px;
+    background-color: rgba(235, 235, 235, 0.8);
+    border: 2px solid rgb(88, 88, 88);
+    border-radius: 50px;
+    color: rgb(48, 48, 48);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+}
+
+.time-handler .play-button:hover {
+    background-color: rgba(174, 174, 174, 0.344);
+    border-color: rgb(88, 88, 88);
+    border: 3px solid rgb(88, 88, 88);
+}
+
+.timer-input-value {
+    background-color: transparent;
+    width: 100%;
+    padding: 0px;
+    color: #494949;
+    font-size: 11px;
+    outline: none;
+    text-align: center;
+}
+
+.play-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* for add new */
+.time-handler.add-new .input-element {
+    border: 2px solid #898989;
+    color: #5c5c5c;
+    margin-left: 4px;
+    width: 94%;
+}
+
+.time-handler.add-new .time-label,
+.time-handler.add-new .time-value {
+    color: #5c5c5c;
+    background-color: transparent;
+    outline: none;
+}
+
+
+.time-handler.add-new .time-element {
+    border: 2px solid #989898;
+
+}
+
+.time-handler.add-new .pill-element {
+    padding: 3px 10px;
+}
+
+.time-handler.add-new .date-element {
+    border: 2px solid #939393;
+    color: #828282;
+}
+
+
+/* end for add new */
+
+/* time handler End of that */
+
+.lucide-pen-line {
+    color: #565656;
+    width: 15px;
+    height: 15px;
+}
+
+.taskcard:hover .task-edit-button-wrap {
+    display: flex;
+}
+
+.task-edit-button-wrap {
+    width: 25px;
+    height: 25px;
+    border-radius: 100px;
+    padding: 4px;
+    display: none;
+}
+
+.task-edit-button-wrap:hover .lucide-pen-line {
+    color: #fff;
+}
+
+.task-edit-button-wrap:hover {
+    background-color: #333;
+}
+
+
+/* expand end */
