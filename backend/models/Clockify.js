@@ -7,6 +7,8 @@ const ClockifySchema = new mongoose.Schema({
     start_time: { type: String, default: "00:00:00" },
     end_time: { type: String, default: "00:00:00" },
     is_running: { type: Boolean, default: true },
+    start_date: { type: Date, default: Date.now },
+    end_date: { type: Date, default: Date.now },
     created_date: { type: Date, default: Date.now }
 });
 

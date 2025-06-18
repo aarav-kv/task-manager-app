@@ -12,10 +12,15 @@ const Clockify = () => {
         setNav({ title: "clockify" })
     }, []);
 
+    const data = ['tas1', 'tas2', 'task3'];
+
     return (
         <>
-            <TimeEntryCard />
-            <TimeEntryCard />
+            {
+                data.map((e) => {
+                    return <TimeEntryCard />;
+                })
+            }
             <TrackerBar />
         </>
     );

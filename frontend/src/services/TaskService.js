@@ -39,8 +39,9 @@ class TaskService {
         return response.data
     }
 
-    async add_timer(task_id, date, start_time, end_time, description, is_running) {
-        let data = { user_id: '6836450a0573505947469f34', date: date, task_id: task_id, start_time: start_time, end_time: end_time, description: description };
+    async add_timer(task_id, uniqueID, date, start_time, start_date, end_time, end_date, description, is_running) {
+        let data = { user_id: '6836450a0573505947469f34', id: uniqueID, date, task_id, start_time, start_date, end_time, end_date, description };
+        console.log("adding timer")
         console.log(data)
         const response = await axios.post(`${this.hostname}/clockify/start`,
             data
@@ -48,12 +49,12 @@ class TaskService {
         return response;
     }
 
-    async stop_timer(id, start_time, end_time, description, is_running) {
-        console.log(start_time)
-        console.log(end_time)
-        console.log(description);
+    async stop_timer(user_id, id, start_time, end_time, description) {
+        console.log("stoping timer")
+        const data = { user_id: user_id, id, start_time, end_time, description };
+        console.log(data)
         const response = await axios.post(`${this.hostname}/clockify/stop`,
-            { user_id: '6836450a0573505947469f34', id: id, start_time: start_time, end_time: end_time, description: description, is_running }
+            data
         )
         return response;
     }
