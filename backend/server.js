@@ -144,10 +144,11 @@ app.post("/task-list", async (req, res) => {
 app.post("/clockify/start", async (req, res) => {
     try {
         console.log("starting clockify")
-        console.log(req.body)
 
-        const { user_id, task_id, start_time, end_time, description, is_running } = req.body;
-        const data = { user_id, task_id, start_time, end_time, description, is_running };
+        const { id, user_id, task_id, start_time, end_time, start_date, end_date, description } = req.body;
+        const data = { _id: id, user_id, task_id, start_time, end_time, start_date, end_date, description };
+        console.log("inserting timer")
+        console.log(data)
 
         const clockify = new Clockify(data);
         await clockify.save()
@@ -157,55 +158,22 @@ app.post("/clockify/start", async (req, res) => {
     }
 });
 
-
-app.post("/clockify/update", async (req, res) => {
-    try {
-        console.log("updating time")
-        const { id, end_time } = req.body;
-
-
-        // 2. Update the specific clockify record
-        const specificUpdate = Clockify.findByIdAndUpdate(id, {
-            $set: {
-                end_time,
-            }
-        });
-
-        const [specificResult] = await Promise.all([specificUpdate]);
-
-        res.status(200).json({
-            message: "Timer updated",
-            updatedRecord: specificResult
-        });
-    } catch (err) {
-        console.error("Error:", err);
-        res.status(500).json({ message: "Server error", error: err.message });
-    }
-});
-
 app.post("/clockify/stop", async (req, res) => {
     try {
-        console.log("stop timer")
+        console.log("stoping timer")
         const { id, start_time, end_time, description } = req.body;
-
-        // 1. Set is_running to false for all documents
-        const bulkUpdate = Clockify.updateMany({}, { $set: { is_running: false } });
-
+        const data = { start_time, end_time, description, is_running: false };
         // 2. Update the specific clockify record
-        const specificUpdate = Clockify.findByIdAndUpdate(id, {
-            $set: {
-                start_time,
-                end_time,
-                description,
-                is_running: false
-            }
-        });
+        const specificResult = await Clockify.findByIdAndUpdate(
+            id,
+            { $set: data },
+            { new: true }
+        );
 
-        const [bulkResult, specificResult] = await Promise.all([bulkUpdate, specificUpdate]);
+        console.log(specificResult)
 
         res.status(200).json({
-            message: "All timers stopped, specific record updated",
-            updatedTimers: bulkResult.modifiedCount,
+            message: "success",
             updatedRecord: specificResult
         });
     } catch (err) {
