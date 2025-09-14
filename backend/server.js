@@ -1,45 +1,37 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+
 const uri = "mongodb+srv://aaravkv13:aaravkv13@studing-cluster.ddfz2.mongodb.net/Todo?retryWrites=true&w=majority&appName=studing-cluster";
 const app = express();
 const PORT = 5000;
+
+// Models
 const Task = require('./models/Task');
 const List = require('./models/List');
-const Clockify = require('./models/Clockify');
-const User = require('./models/User')
+
+// Middleware
 app.use(express.json());
 app.use(cors());
 
+// Connect MongoDB
 mongoose.connect(uri)
     .then(() => console.log("MongoDB connected"))
     .catch((err) => console.error(err));
 
-//To get all the task for body standalone and list
-app.post("/tasks", async (req, res) => {
-    try {
-        const { listid } = req.body;
-        console.log(listid)
-        let tasks = null;
-        if (listid == null) {
-            console.log('if')
-            tasks = await Task.find();
 
-        } else {
-            console.log('inside')
-            tasks = await Task.find({ listid: new mongoose.Types.ObjectId(listid) });
-        }
-        res.status(200).json(tasks);
-    } catch (err) {
-        res.status(500).json({ message: "Server error", error: err.message });
-    }
-});
+// Import and use task routes
+const taskRoutes = require('./routes/taskRoutes');
+app.use('/', taskRoutes);
+
+// Import and use clockify routes
+const clockifyRoutes = require('./routes/clockifyRoutes');
+app.use('/', clockifyRoutes);
 
 //To get all the task using post.
 app.post("/createlistandtask", async (req, res) => {
     try {
         const { listname, task_name, priority, due_date } = req.body;
-        console.log(req.body)
         let list = new List({ list_name: listname });
         await list.save()
         let task = null;
@@ -54,7 +46,7 @@ app.post("/createlistandtask", async (req, res) => {
     }
 });
 
-app.get("/list", async (req, res) => {
+app.get("/dashboard", async (req, res) => {
     let lists = null;
     lists = await List.find();
     let listsWithTasks = await Promise.all(
@@ -69,12 +61,43 @@ app.get("/list", async (req, res) => {
                     }
                 };
             }
-
         })
     );
+
     const tasks = await Task.find({ list_id: null });
     listsWithTasks = { ...listsWithTasks, tasks: tasks };
+
     res.status(200).json(listsWithTasks);
+});
+
+
+app.get("/totalcount", async (req, res) => {
+    try {
+        const now = new Date();
+        const allTasks = await Task.find();
+
+        const totalTasks = allTasks.length;
+        const completedTasks = allTasks.filter(task => task.completed).length;
+        const overdueTasks = allTasks.filter(task =>
+            !task.completed && task.due_date && task.due_date < now
+        ).length;
+        const upcomingTasks = allTasks.filter(task =>
+            !task.completed && task.due_date && task.due_date > now
+        ).length;
+
+        res.status(200).json({
+            stats: {
+                totalTasks,
+                completedTasks,
+                overdueTasks,
+                upcomingTasks
+            }
+        });
+
+    } catch (error) {
+        console.error("Error in /totalcount:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
 });
 
 app.get("/getlist", async (req, res) => {
@@ -98,134 +121,52 @@ app.get("/getlist", async (req, res) => {
     }
 });
 
-app.post("/task-list", async (req, res) => {
+app.post('/list/delete', async function (req, res) {
     try {
-        const { list_id } = req.body;
-        const result = await Task.aggregate([
-            {
-                $lookup: {
-                    from: "clockify",
-                    localField: "_id",
-                    foreignField: "task_id",
-                    as: "clockify"
-                }
-            },
-            {
-                $match: {
-                    list_id: new mongoose.Types.ObjectId(list_id)
-                }
-            }
-        ]);
-        res.status(200).json(result);
-    } catch (error) {
-        console.error('Error in /task-list:', error);
-        res.status(500).json({ message: "Server Error" });
-    }
-});
+        const { ids } = req.body;
+        console.log(ids);
 
+        if (!Array.isArray(ids) || ids.length === 0) {
+            return res.status(400).json({ message: 'No IDs provided' });
+        }
 
-// app.post('/start-timer', async (req, res) => {
-//     const { userId, taskId } = req.body;
-//     await Clockify.updateMany({ userId, isRunning: true }, {
-//         isRunning: false,
-//         endTime: new Date()
-//     });
-//     const timer = new Timer({
-//         userId,
-//         taskId,
-//         startTime: new Date(),
-//         isRunning: true
-//     });
-//     await timer.save();
-//     res.status(200).json({ success: true, timer });
-// });
+        // Delete lists
+        const result = await List.deleteMany({ _id: { $in: ids } });
 
+        // Delete tasks that belong to the deleted lists
+        const taskResult = await Task.deleteMany({ list_id: { $in: ids } });
 
-app.post("/clockify/start", async (req, res) => {
-    try {
-        console.log("starting clockify")
-
-        const { id, user_id, task_id, start_time, end_time, start_date, end_date, description } = req.body;
-        const data = { _id: id, user_id, task_id, start_time, end_time, start_date, end_date, description };
-        console.log("inserting timer")
-        console.log(data)
-
-        const clockify = new Clockify(data);
-        await clockify.save()
-        res.status(200).json(clockify);
-    } catch (err) {
-        res.status(500).json({ message: "Server error", error: err.message });
-    }
-});
-
-app.post("/clockify/stop", async (req, res) => {
-    try {
-        console.log("stoping timer")
-        const { id, start_time, end_time, description } = req.body;
-        const data = { start_time, end_time, description, is_running: false };
-        // 2. Update the specific clockify record
-        const specificResult = await Clockify.findByIdAndUpdate(
-            id,
-            { $set: data },
-            { new: true }
-        );
-
-        console.log(specificResult)
-
-        res.status(200).json({
-            message: "success",
-            updatedRecord: specificResult
+        res.json({
+            message: 'Deleted successfully',
+            deletedLists: result.deletedCount,
+            deletedTasks: taskResult.deletedCount
         });
     } catch (err) {
-        console.error("Error:", err);
-        res.status(500).json({ message: "Server error", error: err.message });
+        console.error('Delete error:', err);
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
-
-app.get("/clockify/get", async (req, res) => {
+app.post("/listname", async function (req, res) {
     try {
-        const data = await Clockify.find();
-        res.status(200).json(data);
+        const { taskID } = req.body
+        const task = await Task.findById(taskID).populate("list_id")
+        res.status(200).json(task)
+    } catch (error) {
+        console.error('Error:', error);
+    }
+})
+
+app.post('/list/add', async function (req, res) {
+    try {
+        const { list_name, list_icon } = req.body
+        let list = new List({ list_name, list_icon });
+        const result = await list.save()
+        console.log(result)
+        res.json(result);
     } catch (err) {
-        res.status(500).json({ message: "Server error", error: err.message });
-    }
-});
-
-app.post('/addtask', async (req, res) => {
-    console.log("Inserting task....")
-    const { title, description, date, list_id, due_date, priority, completed } = req.body;
-    const taskVal = { user_id: '6836450a0573505947469f34', title, description, last_modified_date: date, list_id, due_date, priority, completed };
-    console.log(taskVal)
-    const task = new Task(taskVal);
-    await task.save();
-    res.json(task);
-});
-
-app.delete('/tasks', async (req, res) => {
-    try {
-        const { checkedTaskIds } = req.body; // Expect an array of IDs
-        console.log("Deleting task....")
-        await Task.deleteMany({ _id: { $in: checkedTaskIds } });
-        res.json({ success: true, message: "Tasks deleted successfully" });
-    } catch (error) {
-        res.status(500).json({ error: "Error deleting tasks" });
-    }
-});
-
-app.put('/task', async (req, res) => {
-    console.log("updating task details..")
-    const taskData = req.body.data;
-    const { _id, taskName, edited } = taskData;
-    try {
-        const updatedTask = await Task.updateOne({ _id: _id }, { name: taskName }, { new: true });
-        console.log(updatedTask)
-        res.json({ success: updatedTask.acknowledged });
-
-        console.log("updating task completed..")
-    } catch (error) {
-        res.status(500).json({ success: false });
-        console.error("Error updating task:", error);
+        console.error('List error:', err);
+        res.status(500).json({ message: 'Server error' });
     }
 })
 

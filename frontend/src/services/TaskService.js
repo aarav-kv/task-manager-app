@@ -19,19 +19,28 @@ class TaskService {
             return response.data;
         }
         else if (tabid == "dashboard") {
-            //This is used for dashboard
-            console.log("inside tasklist")
-            const response = await axios.get(`${this.hostname}/list`);
+            const response = await axios.get(`${this.hostname}/dashboard`);
+            // console.log(response)
             return Object.values(response.data);
         } else if (tabid == 'tasklist') {
             const response = await axios.post(`${this.hostname}/task-list`, { list_id: list_id });
             return Object.values(response.data);
+        } else if (tabid == "totalcount") {
+            const response = await axios.get(`${this.hostname}/totalcount`, { list_id: list_id });
+            return response.data;
         }
     }
 
+
+    async getListByTaskId(taskID) {
+        const response = await axios.post(
+            `${this.hostname}/listname`,
+            { taskID }
+        )
+        return response.data
+    }
+
     async createListAndAddTask(task) {
-        // const date = new Date();
-        // console.log(task)
         const response = await axios.post(
             `${this.hostname}/createlistandtask`,
             { listname: task.list_name, task_name: task.title, priority: task.priority, due_date: task.due_date }
@@ -39,8 +48,9 @@ class TaskService {
         return response.data
     }
 
-    async add_timer(task_id, date, start_time, end_time, description, is_running) {
-        let data = { user_id: '6836450a0573505947469f34', date: date, task_id: task_id, start_time: start_time, end_time: end_time, description: description };
+    async add_timer(task_id, uniqueID, date, start_time, start_date, end_time, end_date, description) {
+        let data = { user_id: '6836450a0573505947469f34', id: uniqueID, date, task_id, start_time, start_date, end_time, end_date, description };
+        console.log("adding timer")
         console.log(data)
         const response = await axios.post(`${this.hostname}/clockify/start`,
             data
@@ -48,12 +58,44 @@ class TaskService {
         return response;
     }
 
-    async stop_timer(id, start_time, end_time, description, is_running) {
-        console.log(start_time)
-        console.log(end_time)
-        console.log(description);
+    async stop_timer(user_id, id, start_time, end_time, description, elapsed_time) {
+        console.log("stoping timer")
+        const data = { user_id: user_id, id, start_time, end_time, description, elapsed_time };
+        console.log(data)
         const response = await axios.post(`${this.hostname}/clockify/stop`,
-            { user_id: '6836450a0573505947469f34', id: id, start_time: start_time, end_time: end_time, description: description, is_running }
+            data
+        )
+        return response;
+    }
+
+    async delete_list(ids) {
+        console.log(ids)
+        const response = await axios.post(`${this.hostname}/list/delete`,
+            { ids }
+        )
+        console.log(response)
+        return response
+    }
+
+    async delete_timer(timerID) {
+        console.log("deleteing timer")
+        const data = { timerID: timerID };
+        console.log(data)
+        const response = await axios.post(`${this.hostname}/clockify/delete`,
+            data
+        )
+        return response;
+    }
+
+    async clockifydata() {
+        const response = await axios.get(`${this.hostname}/clockify/tasks`);
+        return response.data;
+    }
+    async pause_timer(user_id, id, start_time, end_time, description, is_paused) {
+        console.log("pausing timer")
+        const data = { user_id: user_id, id, start_time, end_time, description, is_paused };
+        const response = await axios.post(`${this.hostname}/clockify/pause`,
+            data
         )
         return response;
     }
@@ -78,21 +120,15 @@ class TaskService {
         // localStorage.setItem("tasks", JSON.stringify(this.taskList));
         console.log(task)
         const response = await axios.post(`${this.hostname}/addtask`, task)
-
+        return response
         // Return the values get from server. not from the front end.
         // console.log(response);
         // return task;
     }
 
-    async addList(task) {
-        // this.taskList.push(task);
-        // localStorage.setItem("tasks", JSON.stringify(this.taskList));
-        console.log(task)
-        const response = await axios.post(`${this.hostname}/addtask`, task)
-
-        // Return the values get from server. not from the front end.
-        // console.log(response);
-        // return task;
+    async add_list(list) {
+        const response = await axios.post(`${this.hostname}/list/add`, list)
+        return response
     }
 
     async update(updatedTask) {

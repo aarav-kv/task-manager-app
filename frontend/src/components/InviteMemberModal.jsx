@@ -4,7 +4,13 @@ import '../styles/InviteMemberModal.css';
 
 const InviteMemberModal = ({ isOpen, onClose }) => {
     const [email, setEmail] = useState('');
-    const [role, setRole] = useState('member');
+    const [role, setRole] = useState('viewer');
+
+    const handleRoleChange = (newRole) => {
+        setRole(newRole);
+        console.log('Selected role:', newRole);
+        // You can add additional logic here, like calling an API
+    };
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState('');
@@ -86,6 +92,9 @@ const InviteMemberModal = ({ isOpen, onClose }) => {
         }
     };
 
+
+
+
     if (!isOpen) return null;
 
     return (
@@ -126,6 +135,7 @@ const InviteMemberModal = ({ isOpen, onClose }) => {
                                     <input
                                         type="email"
                                         value={email}
+                                        className='emailbox'
                                         onChange={(e) => setEmail(e.target.value)}
                                         placeholder="Enter email address"
                                         required
@@ -135,14 +145,14 @@ const InviteMemberModal = ({ isOpen, onClose }) => {
 
                             <div className="form-group">
                                 <label>Role</label>
-                                <select
-                                    value={role}
-                                    onChange={(e) => setRole(e.target.value)}
-                                >
-                                    <option value="member">Member</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="viewer">Viewer</option>
-                                </select>
+                                <div className="role-toggle" id="roleToggle" data-active={`${role}`}>
+                                    <button type="button" className="role-option" data-role="admin" onClick={() => { handleRoleChange('admin') }}>
+                                        Admin
+                                    </button>
+                                    <button type="button" className="role-option" data-role="viewer" onClick={() => { handleRoleChange('viewer') }}>
+                                        Viewer
+                                    </button>
+                                </div>
                             </div>
 
                             <button
@@ -156,51 +166,7 @@ const InviteMemberModal = ({ isOpen, onClose }) => {
                     </div>
 
                     {/* Invite Link Section */}
-                    <div className="invite-section">
-                        <h3>Share Invite Link</h3>
-                        <div className="form-group">
-                            <label>Role for link recipients</label>
-                            <select
-                                value={role}
-                                onChange={(e) => setRole(e.target.value)}
-                            >
-                                <option value="member">Member</option>
-                                <option value="admin">Admin</option>
-                                <option value="viewer">Viewer</option>
-                            </select>
-                        </div>
 
-                        {!inviteLink ? (
-                            <button
-                                onClick={generateInviteLink}
-                                className="secondary-btn"
-                                disabled={loading}
-                            >
-                                {loading ? 'Generating...' : 'Generate Invite Link'}
-                            </button>
-                        ) : (
-                            <div className="link-container">
-                                <div className="link-display">
-                                    <input
-                                        type="text"
-                                        value={inviteLink}
-                                        readOnly
-                                        className="link-input"
-                                    />
-                                    <button
-                                        onClick={copyLink}
-                                        className="copy-btn"
-                                        title="Copy link"
-                                    >
-                                        {linkCopied ? <Check size={16} /> : <Copy size={16} />}
-                                    </button>
-                                </div>
-                                <p className="link-info">
-                                    This link will expire in 7 days and can be used multiple times.
-                                </p>
-                            </div>
-                        )}
-                    </div>
                 </div>
             </div>
         </div>

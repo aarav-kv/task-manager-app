@@ -81,7 +81,6 @@ const Calendar = () => {
 
     useEffect(() => {
         Task.get('today').then(res => {
-            // console.log(res);
             setTasks(res);
         });
     }, []); // empty dependency array = run only once   

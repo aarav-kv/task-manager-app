@@ -206,19 +206,29 @@
     z-index: 1;
 }
 
-.input-with-icon input {
-    padding-left: 40px;
+.emailbox {
+    width: 100%;
+    background-color: #f0f0f0;
+    border-radius: 25px;
+    padding: 10px;
+    padding-left: 50px;
+    display: flex;
+    position: relative;
+    border: none;
+    outline: none;
+    width: 100%;
 }
 
 /* Buttons */
 .primary-btn {
-    background: #3b82f6;
+    background: #0e0e0e;
     color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 8px;
+    border-radius: 20px;
     font-size: 14px;
     font-weight: 500;
+    letter-spacing: 3px;
     cursor: pointer;
     transition: all 0.3s ease;
     width: 100%;
@@ -235,6 +245,7 @@
     transform: none;
 }
 
+.delete-btn,
 .secondary-btn {
     background: #f3f4f6;
     color: #374151;
@@ -246,6 +257,10 @@
     cursor: pointer;
     transition: all 0.3s ease;
     width: 100%;
+}
+
+.delete-btn {
+    background-color: rgb(249, 66, 66);
 }
 
 .secondary-btn:hover:not(:disabled) {
@@ -375,6 +390,9 @@
     color: #9ca3af;
 }
 
+
+
+
 /* Mobile Responsiveness */
 @media (max-width: 480px) {
     .modal-container {
@@ -390,4 +408,84 @@
     .modal-header h2 {
         font-size: 16px;
     }
+}
+
+
+.form-group label {
+    display: block;
+    margin-bottom: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.role-toggle {
+    background-color: #f0f0f0;
+    border-radius: 25px;
+    padding: 4px;
+    display: flex;
+    position: relative;
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+.role-option {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    background: transparent;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #666;
+}
+
+.role-option.active {
+    background-color: white;
+    color: #333;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    font-weight: 600;
+}
+
+.role-option:hover:not(.active) {
+    color: #333;
+}
+
+/* Icons for each role */
+.role-option::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* Animation for smooth transitions */
+.role-toggle::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    height: calc(100% - 8px);
+    width: 50%;
+    background-color: white;
+    border-radius: 20px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 1;
+}
+
+.role-toggle[data-active="admin"]::after {
+    transform: translateX(0%);
+}
+
+.role-toggle[data-active="viewer"]::after {
+    transform: translateX(96%);
 }

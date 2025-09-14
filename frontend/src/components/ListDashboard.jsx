@@ -1,7 +1,8 @@
-import { useState } from 'react';
-
+import { useEffect, useContext, useRef, useState } from "react";
+import { SidebarContext } from "../context/SideBarContext";
 const ListDashboard = ({ groupedTask, idx }) => {
     const [open, isOpen] = useState(false);
+    const { userTheme } = useContext(SidebarContext);
     return (
         <span className="taskcard-dashboard list" key={idx}>
             <span className="header">
@@ -22,7 +23,7 @@ const ListDashboard = ({ groupedTask, idx }) => {
 
             <span className={`listcontent ${open ? 'open' : ''}`}>
                 {groupedTask.list.task && groupedTask.list.task.map((subtask) => (
-                    <span className={`taskcard-dashboard ${subtask.priority}`} key={subtask._id}>
+                    <span className={`taskcard-dashboard ${subtask.priority ? subtask.priority.toLowerCase() : "default"}`} key={subtask._id}>
                         <span
                             style={{
                                 display: "flex",
@@ -45,10 +46,10 @@ const ListDashboard = ({ groupedTask, idx }) => {
                                     fontSize: "13px",
                                     width: "100%",
                                 }}
-                                className={subtask.completed ? "task-completed" : ""}
+                                className={subtask.completed ? `${userTheme} task-completed` : `${userTheme}`}
                                 onClick={() => { /* handle click on subtask name */ }}
                             >
-                                {subtask.name}
+                                {subtask.title}
                             </label>
                         </span>
                     </span>

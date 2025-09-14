@@ -3,7 +3,7 @@
     overflow-y: auto;
     background-color: #ffffffe6;
     display: flex;
-    padding-top: 20px;
+    padding-top: 0px;
     padding-bottom: 150px;
     position: relative;
     top: 0px;
@@ -32,26 +32,120 @@
     color: #8c8c8c;
 }
 
-.total-time-wraper {
-    display: flex;
-    align-items: center;
-    padding: 0 63px;
 
+
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
 
-.total-time-inner-wrap {
+.timerIconWrap .activeRedDot {
+    width: 7px;
+    height: 7px;
+    background-color: red;
+    border-radius: 100%;
+    animation: blink 1s infinite;
+}
+
+.rounded-box {
     display: flex;
-    gap: 10px;
+    gap: 5px;
     align-items: center;
-    margin-bottom: 10px;
     border: 1px solid rgba(0, 0, 0, 0.148);
-    padding: 5px 10px;
     border-radius: 20px;
+    font-size: 13px;
+    user-select: none;
+    box-sizing: border-box;
+    transform: scaleX(0);
+    width: 0px;
+    height: 30px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    opacity: 0;
+    position: absolute;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    transform-origin: left;
 }
 
-.total-time-title {
-    color: #606060;
-    font-size: 13px;
+.rounded-box.show {
+    position: relative;
+    opacity: 1;
+    width: fit-content;
+    transform: scaleX(1);
+}
+
+.rounded-box.info {
+    color: #242424;
+    cursor: default;
+}
+
+.rounded-box.action {
+    color: #000000;
+    font-weight: 550;
+    cursor: pointer;
+    /* transform: scale(1);
+    transition: all 0.2s ease;
+    height: fit-content; */
+}
+
+.rounded-box:hover {
+    box-shadow: 0 0 0 2px #cbd4e0d5;
+    transition: box-shadow 0.3s ease;
+}
+
+
+.disable.rounded-box {
+    pointer-events: none !important;
+    opacity: 0.7;
+}
+
+
+.rounded-box.select-all {
+    padding: 4px 5px;
+    padding-right: 8px;
+    transition: all 0.5s ease !important;
+}
+
+.rounded-box.active-option {
+    transition: all 0.2s ease !important;
+    border-color: #2c9ef5bf;
+    background-color: hsl(209, 100%, 94%);
+    color: #1f81cb !important;
+}
+
+.rounded-box.active-option-click:active {
+    transition: all 0.2s ease !important;
+    border-color: #242424bf;
+    background-color: #eff5ff;
+    color: rgb(0, 0, 0) !important
+}
+
+
+.list-section-checkbox {
+    transform: scale(0);
+    width: fit-content;
+    position: absolute !important;
+    left: 30px;
+    top: 15px;
+    transition: all 0.2s ease;
+}
+
+.list-section-checkbox.show {
+    transform: scale(1);
+}
+
+.checkbox-wrapper-combined.select-all {
+    transform: scale(0.7);
+
 }
 
 .main-view-container {
@@ -62,6 +156,27 @@
     border-left: 1px solid #0000002a;
     border-right: 1px solid #0000002a;
     box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.067);
+}
+
+.taskcard-wrapper {
+    margin: 5px 65px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #fbfbfb;
+    min-height: max-content;
+    transition: all 0.4s ease;
+}
+
+.taskcard-wrapper:hover {
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.08);
+}
+
+.time-handler.expanded.add-new {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .taskcard,
@@ -77,8 +192,16 @@
 }
 
 .taskcard {
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.155);
-    border: 1px solid rgba(0, 0, 0, 0.088);
+    padding: 0 20px;
+    padding-right: 0px;
+}
+
+.chevron-right-icon {
+    padding-right: 30px;
+}
+
+i.fa-chevron-right.expanded {
+    transform: rotate(90deg);
 }
 
 .list-card {
@@ -88,47 +211,70 @@
     margin: 2px 65px;
     border: 1px solid #d9d9d9;
     border-radius: 5px;
+    min-height: 50px;
+    padding-left: 20px;
 }
 
-.taskcard-wrapper {
-    margin: 2px 65px;
-    border: 1px solid #d9d9d9;
-    display: flex;
-    flex-direction: column;
-    border-radius: 5px;
-    overflow: hidden;
-    background-color: #fbfbfb;
-    min-height: max-content;
+
+.list-card .list-name {
+    font-size: 14px;
 }
 
-.list-card.add-list {
-    justify-content: center;
-    font-weight: 500;
-    font-size: 16px;
-    color: #4A90E2;
-    background: #f5faff;
-    border: 2px dashed #4A90E2;
-    cursor: pointer;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
 
-.list-card.add-list:hover {
-    background: #e6f2ff;
-    border-color: #007aff;
-    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.1);
-}
-
-.list-card.hide {
-    display: none;
-}
-
-.taskcard .calendarIcon {
+.taskcard .calendarIcon,
+.taskcard .timerIcon {
     width: 13px;
     height: 13px;
 }
 
+.option-list {
+    display: flex;
+    gap: 10px;
+    margin: 0 60px;
+    padding-top: 10px;
+    height: fit-content;
+    position: sticky;
+    top: 0px;
+    /* or any desired offset like top: 10px */
+    background: white;
+    /* optional: ensures it doesn't become transparent over content */
+    z-index: 9;
+    /* optional: keeps it above other content */
+}
+
+.option-list span {
+    font-size: 11px;
+}
+
+.option-list .main-stop-timer {
+    background-color: rgb(241, 134, 68);
+    color: white;
+    border-radius: 10px;
+    font-size: 12.5px !important;
+    transition: transform 0.2s ease, width 0.2s ease, margin 0.2s ease, padding 0.2s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+    width: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.option-list .main-stop-timer.active {
+    width: fit-content;
+    padding: 0px 14px;
+    padding-bottom: 2px;
+    margin-right: -3px;
+    margin-left: 5px;
+    transform: scaleX(1);
+}
+
+.option-list .lucide-chevron-down {
+    width: 13px;
+}
+
 .calendarIconWrap,
-.priorityIconWrap {
+.priorityIconWrap,
+.timerIconWrap {
     display: flex;
     align-items: center;
     justify-items: center;
@@ -186,10 +332,6 @@
     background-color: #777777;
 }
 
-.list-card {
-    min-height: 50px;
-    padding-left: 10px;
-}
 
 .list-card .icon {
     width: 20px;
@@ -204,7 +346,6 @@
     gap: 10px;
 }
 
-.taskcard:hover,
 .list-card:hover {
     transition: box-shadow 0.2s ease, border 0.2s ease;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
@@ -282,6 +423,7 @@
 .fa-chevron-right {
     color: #646464;
     margin-left: 20px;
+    transition: transform 0.3s ease;
 }
 
 .fa-chevron-right.completed {
@@ -301,7 +443,7 @@
 }
 
 .task-scroll-view.empty {
-    padding-bottom: 50px !important;
+    padding-bottom: 50px;
 }
 
 .task-scroll-view.dark .loading-container {
@@ -492,6 +634,10 @@
     transform: scale(0);
 }
 
+.nav-container .lucide {
+    width: 18px;
+}
+
 .list-card:hover .ellipsis-icon-container {
     transform: scale(.8);
     padding: 4px 13px;
@@ -502,6 +648,11 @@
     display: flex;
     align-items: center;
     justify-content: right;
+}
+
+.list-card .lucide {
+    width: 18px;
+    height: 20px;
 }
 
 .ellipsis-icon-container:hover {
@@ -545,6 +696,8 @@
     max-height: 100px;
     opacity: 1;
     padding: 5px 20px;
+    position: relative;
+    transition: all 0.3s ease;
 }
 
 /* For expand */
@@ -555,7 +708,7 @@
     display: flex;
     align-items: center;
     padding: 0 16px;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     background-color: #f8f9fa;
     border-top: 1px solid #e5e7eb;
 }
@@ -608,7 +761,7 @@
     border: 2px solid #615ffd;
     display: flex;
     gap: 8px;
-    margin: 0 10px;
+    margin-left: 10px;
     width: 95px;
     text-align: center;
 }
@@ -633,7 +786,7 @@
 
 .time-handler .play-button {
     padding: 5px 6px;
-    margin: 0 10px;
+    margin-left: 8px;
     background-color: rgba(235, 235, 235, 0.8);
     border: 2px solid rgb(88, 88, 88);
     border-radius: 50px;
@@ -645,6 +798,35 @@
     justify-content: center;
     width: 30px;
     height: 30px;
+}
+
+.stop-button {
+    padding: 0;
+    margin-left: 10px;
+    background-color: #ffffffcc;
+    border: 2px solid rgb(88, 88, 88);
+    border-radius: 50px;
+    color: rgb(48, 48, 48);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    transform: scale(0);
+    transition: transform 0.2s ease, padding 0.2s ease, width 0.3s ease, margin 0.2s ease;
+}
+
+.stop-button.show {
+    width: 30px;
+    margin-left: 10px;
+    padding: 5px 6px;
+    transform: scale(1);
+}
+
+.stop-button.spacing {
+    margin-left: 10px;
+    width: 30px;
 }
 
 .time-handler .play-button:hover {

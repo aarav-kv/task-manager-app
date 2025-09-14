@@ -60,19 +60,6 @@ const SideBar = ({ count, toggle }) => {
                         </div>
                         <TaskCounter count={0} />
                     </li>
-                    <li
-                        className={`option ${activeTab === "dashboard" ? "active" : ""}`}
-                        onClick={() => navigate("/dashboard")}
-                    >
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <ChartLine size={18} className="sidemenu-icon" />
-                            <span>Dashboard</span>
-                        </div>
-                        <div>
-                            <i className="fa-solid fa-chevron-right"></i>
-                        </div>
-                    </li>
-
                 </section>
 
                 <section className={`settings-options ${userTheme}`}>

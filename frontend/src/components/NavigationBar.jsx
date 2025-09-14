@@ -10,21 +10,20 @@ import { SidebarContext } from "../context/SideBarContext.jsx";
 import { List, CalendarDays, FileCode2, Sprout, Dumbbell, Ham, Droplets, ListTodo, House, ChartLine, Hourglass, ChevronLeft, Search, UserPlus, Bell } from 'lucide-react';
 import TaskContext from "../context/TaskContext.jsx";
 import InviteMemberModal from "./InviteMemberModal.jsx";
-
+import NotificationBell from "./NotificationBell.jsx"
 const NavigationBar = () => {
     const { isAuthenticated } = useAuth();
     const { message, icon } = useGreeting();
     const [hasNotification, setHasNotification] = useState(false)
     const { userTheme, activeTab, nav, setNav, pageName, setPageName, setActiveTab } = useContext(SidebarContext);
     const navigate = useNavigate();
-    const { closeTaskEditor, closeListEditor, isTaskEditOpen, isListEditOpen } = useContext(TaskContext);
+    const { closeTaskEditor, closeListEditor, isTaskEditOpen, isListEditOpen, getListIcon } = useContext(TaskContext);
 
     // New state for search and invite modal
     const [searchQuery, setSearchQuery] = useState('');
     const [showInviteModal, setShowInviteModal] = useState(false);
 
     let capitalized = '';
-
     if (nav.title != null) {
         capitalized = nav.title
             .toLowerCase()
@@ -34,27 +33,16 @@ const NavigationBar = () => {
     } else {
         capitalized = "Today"
     }
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [unreadCount, setUnreadCount] = useState(3);
+    const toggleDropdown = () => {
+        setShowDropdown(!showDropdown);
+        console.log('Notification clicked!');
+    };
 
     const getIcon = () => {
         if (nav.icon && nav.icon !== '') {
-            switch (nav.icon) {
-                case 'list':
-                    return <List className="navTitleIcon" />;
-                case 'calendardays':
-                    return <CalendarDays className="navTitleIcon" />;
-                case 'filecode2':
-                    return <FileCode2 className="navTitleIcon" />;
-                case 'sprout':
-                    return <Sprout className="navTitleIcon" />;
-                case 'dumbbell':
-                    return <Dumbbell className="navTitleIcon" />;
-                case 'ham':
-                    return <Ham className="navTitleIcon" />;
-                case 'droplets':
-                    return <Droplets className="navTitleIcon" />;
-                default:
-                    return <List className="icon" />;
-            }
+            return getListIcon(nav.icon)
         } else {
             switch (nav.title.toLowerCase()) {
                 case 'today':
@@ -152,10 +140,8 @@ const NavigationBar = () => {
                                 </button>
                             }
 
-                            <div className="bell-wrapper">
-                                <Bell className="bell-icon" />
-                                {hasNotification && <span className="bell-notification-dot"></span>}
-                            </div>
+
+                            <NotificationBell />
                         </div>
                     </>
                 )}
@@ -168,6 +154,8 @@ const NavigationBar = () => {
                     onClose={() => setShowInviteModal(false)}
                 />
             )}
+
+
         </>
     );
 };

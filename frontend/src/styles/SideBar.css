@@ -243,6 +243,11 @@
     background-color: rgb(35, 35, 35);
 }
 
+.side-bar .options.dark .option.active,
+.side-bar .settings-options.dark .option.active {
+    background-color: #404040;
+}
+
 .side-bar .options.dark .option span,
 .side-bar .settings-options.dark span,
 .side-bar.dark .page-title {
@@ -256,4 +261,22 @@
 
 .side-bar.dark .task-counter {
     background-color: #2e2e2e;
+}
+
+.side-bar.dark .theme-toggle-container {
+    background-color: #2e2e2e;
+}
+
+.side-bar.dark .theme-button.active {
+    background-color: #404040;
+    color: #f5f5f5;
+}
+
+.side-bar.dark .lucide-moon {
+    color: #0758da !important;
+}
+
+
+.side-bar.dark .user-info-row {
+    background-color: #404040;
 }

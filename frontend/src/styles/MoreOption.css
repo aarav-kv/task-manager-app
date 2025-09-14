@@ -1,3 +1,9 @@
+.listicon .lucide {
+    width: 17px;
+    height: 17px;
+    color: #424242;
+}
+
 /* MoreOption.css */
 .more-option-container {
     position: relative;

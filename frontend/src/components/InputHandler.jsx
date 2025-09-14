@@ -6,8 +6,8 @@ import AddButton from "./AddButton.jsx"
 import Task from "../services/TaskService.js"
 import { useMessage } from "../hooks/useMessage.js";
 import { X } from "lucide-react";
-const InputHandler = ({ pageName, toggle, date, addTaskToView, addTaskToListView }) => {
-    const [taskData, setTaskData] = useState({ taskTitle: "" });
+const InputHandler = ({ pageName, toggle, date, addTaskToView, addTaskToListView, addListView, activeListID }) => {
+    const [data, setData] = useState({ taskTitle: "" });
     const [clearSelection, setClearSelection] = useState(false);
     const { userTheme } = useContext(SidebarContext);
     let message = useMessage();
@@ -23,8 +23,8 @@ const InputHandler = ({ pageName, toggle, date, addTaskToView, addTaskToListView
         }
     };
 
-    const setData = (data) => {
-        setTaskData(prev => ({ ...prev, ...data }));
+    const handleData = (data) => {
+        setData(prev => ({ ...prev, ...data }));
     };
 
     const getPriorityColor = (priority) => {
@@ -40,29 +40,35 @@ const InputHandler = ({ pageName, toggle, date, addTaskToView, addTaskToListView
         }
     };
     const addNewList = async () => {
-        console.log(pageName)
-        console.log(taskData)
+        const list = { list_name: data.taskTitle, list_icon: data.listIcon == "" ? "defualt" : data.listIcon }
+        if (list.list_name == '') {
+            message.add('Please enter a list name.', message.TYPE.ERROR);
+        } else {
+            setData({ taskTitle: "" })
+            Task.add_list(list).then((res) => {
+                addListView(res.data)
+            })
+        }
     }
     const addNewTask = async () => {
-        const task = { title: taskData.taskTitle, description: '', completed: false, priority: taskData.priority, list_name: taskData.listName, due_date: taskData.date }
-        if (task.title == '' && task.list_name == '') {
-            if (pageName == 'list') {
-                message.add('Please enter a list name.', message.TYPE.ERROR);
-            } else {
-                message.add('Please write a task before adding.', message.TYPE.ERROR);
-            }
+        const task = { title: data.taskTitle, description: '', completed: false, priority: data.priority, list_name: data.listName, due_date: data.date, list_id: activeListID }
+        if (!task.title?.trim()) {
+            message.add('Task title cannot be empty', message.TYPE.ERROR);
+            return;
         } else {
             if (task.list_name == null || task.list_name == '') {
                 // console.log("Adding task", task)
-                Task.addTask(task);
-                addTaskToView(task)
+                Task.addTask(task).then((res) => {
+                    addTaskToView(res.data)
+                })
             } else {
                 // console.log('Creating list and adding task in it')
                 // console.log(task);
-                let data = await Task.createListAndAddTask(task);
-                addTaskToListView(data)
+                Task.createListAndAddTask(task).then((res) => {
+                    addTaskToListView(res)
+                })
             }
-            setTaskData({ taskTitle: "" });
+            setData({ taskTitle: "" });
             setClearSelection(true)
         }
     };
@@ -73,14 +79,14 @@ const InputHandler = ({ pageName, toggle, date, addTaskToView, addTaskToListView
                 <input
                     type="text"
                     placeholder={pageName == "list" ? 'Add a list...' : 'Add a task...'}
-                    value={taskData.taskTitle}
-                    onChange={(event) => setTaskData((prev) => { return { ...prev, taskTitle: event.target.value }; })}
+                    value={data.taskTitle}
+                    onChange={(event) => setData((prev) => { return { ...prev, taskTitle: event.target.value }; })}
                     onKeyDown={handleKeyDown}
                     className="add-task-input"
                 />
 
                 <AddButton pageName={pageName} addNewTask={addNewTask} addNewList={addNewList} />
-                <MoreOption pageName={pageName} setData={setData} onClear={() => { setClearSelection(false) }} clearSelection={clearSelection} />
+                <MoreOption pageName={pageName} handleData={handleData} onClear={() => { setClearSelection(false) }} clearSelection={clearSelection} />
             </div>
         </>
     );

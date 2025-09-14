@@ -173,16 +173,6 @@
   box-shadow: none;
 }
 
-.bell-wrapper {
-  position: relative;
-  display: inline-block;
-  border-radius: 100px;
-  padding: 10px;
-}
-
-.bell-wrapper:hover {
-  background-color: #00000015;
-}
 
 .bell-notification-dot {
   position: absolute;
@@ -197,8 +187,7 @@
   animation: blink 1.2s infinite;
 }
 
-.bell-icon {
-  transform: scale(0.7);
+.bell-wrapper .bell-icon {
   color: #303030;
 }
 

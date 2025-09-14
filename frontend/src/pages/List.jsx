@@ -1,8 +1,5 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import TaskView from "../components/TaskView";
-import { useLocation } from "react-router-dom";
-import Task from "../services/TaskService";
-import TaskDetail from "../components/TaskDetail";
 import { SidebarContext } from "../context/SideBarContext";
 
 const List = () => {

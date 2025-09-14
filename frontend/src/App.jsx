@@ -12,7 +12,7 @@ import Layout from './components/Layout.jsx';
 import Calendar from './pages/Calendar.jsx'
 import List from './pages/List.jsx'
 import Today from './pages/Today.jsx'
-import Clockify from './pages/Clockify.jsx'
+import TimeEntryComponent from './components/TimeEntryComponent.jsx'
 import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 function App() {
   // console.log(useAuth())
@@ -36,7 +36,7 @@ function App() {
           isAuthenticated ? < Layout /> : <Home />
         }>
           <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/clockify' element={<Clockify />} />
+          <Route path='/clockify' element={<TimeEntryComponent />} />
           <Route path='/calendar' element={<Calendar />} />
           <Route path='/list' element={<List />} />
           <Route path='/today' element={<Today />} />

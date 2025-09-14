@@ -7,11 +7,6 @@
     flex: 1;
 }
 
-.task-list-container {
-    max-height: 400px;
-    overflow-y: auto;
-}
-
 .calendar-page-container {
     display: flex;
     gap: 20px;
